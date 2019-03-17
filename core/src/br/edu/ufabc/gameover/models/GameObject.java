@@ -30,9 +30,9 @@ public abstract class GameObject{
 	
 	abstract public void update();
 	
-	public void draw(SpriteBatch batch) {
+	public void draw(SpriteBatch batch, int xGeneralCoordenate) {
 		//Contem as informações do que exibir na tela
-		batch.draw(texture, this.xPos, this.yPos);
+		batch.draw(texture, this.xPos+xGeneralCoordenate, this.yPos);
 	}
 	
 	//Muda a posicao do objeto na tela

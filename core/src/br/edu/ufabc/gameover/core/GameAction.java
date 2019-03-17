@@ -31,7 +31,7 @@ public class GameAction {
 	
 	public void update(float delta) {
 		//fazendo update dos objetos
-		bg.update(this.xGeneralCoordenate);
+		bg.update();
 		for (GameObject o: objects) {
 			o.update();
 		}
@@ -45,6 +45,10 @@ public class GameAction {
 			System.out.println("Andou esquerda");
 			if(xGeneralCoordenate < - 5) xGeneralCoordenate += 5;
 		}
+	}
+	
+	public int getXGeneralCoordenate() {
+		return this.xGeneralCoordenate;
 	}
 	
 }

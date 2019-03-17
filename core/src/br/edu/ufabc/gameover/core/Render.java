@@ -16,9 +16,9 @@ public class Render {
 	public void draw(float delta) {
 		//Desenhando na tela
 		gameAction.sprite.begin();
-		gameAction.bg.draw(gameAction.sprite);
+		gameAction.bg.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
 		for (GameObject o: gameAction.objects) {
-			o.draw(gameAction.sprite);
+			o.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
 		}
 		gameAction.sprite.end();
 		
