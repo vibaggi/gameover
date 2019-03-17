@@ -8,7 +8,7 @@ public class BgWorld1 extends ScenarioObject{
 	int xGeneralCoordenate;
 	
 	public BgWorld1() {
-		super(new Texture("backgroundv1.png"), 1000, 800);
+		super(new Texture("backgroundv1.png"));
 		// Iniciando posicoes
 		this.xGeneralCoordenate = 0;
 	}

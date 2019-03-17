@@ -9,10 +9,9 @@ public abstract class PassiveEnemy extends GameObject{
 	private int hitPoint; //Valor do dano do inimigo
 	
 	
-	PassiveEnemy(Texture texture, int width, int height, int hitPoint) {
-		super(texture, width, height);
+	PassiveEnemy(Texture texture, int hitPoint) {
+		super(texture);
 		this.hitPoint = hitPoint;
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void update() {

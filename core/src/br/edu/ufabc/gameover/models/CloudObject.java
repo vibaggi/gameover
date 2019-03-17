@@ -8,7 +8,7 @@ public class CloudObject extends ScenarioObject{
 	private int y = 400;
 	
 	public CloudObject() {
-		super(new Texture("nuvem.png"), 170, 80);
+		super(new Texture("nuvem.png"));
 		// TODO Auto-generated constructor stub
 		this.setPosition(this.x, this.y);
 	}

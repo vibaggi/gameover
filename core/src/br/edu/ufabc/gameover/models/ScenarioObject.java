@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 
 abstract public class ScenarioObject extends GameObject{
 
-	ScenarioObject(Texture texture, int width, int height) {
-		super(texture, width, height);
+	ScenarioObject(Texture texture) {
+		super(texture);
 		// TODO Auto-generated constructor stub
 	}
 

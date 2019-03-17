@@ -18,7 +18,7 @@ public abstract class GameObject{
 	/*
 	 * Classe abstratas de todos os objetos que são Sprites.
 	 * */
-	GameObject(Texture texture, int width, int height){
+	GameObject(Texture texture){
 		this.texture 	= texture;
 	}
 	
@@ -39,6 +39,10 @@ public abstract class GameObject{
 	public void setPosition(int x, int y) {
 		this.xPos = x;
 		this.yPos = y;
+	}
+	
+	public void setTexture(Texture tx) {
+		this.texture = tx;
 	}
 	
 
