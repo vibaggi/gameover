@@ -17,7 +17,6 @@ public class BgWorld1 extends ScenarioObject{
 	public void moving() {
 		// O movimento do background é de acordo com a coordenada geral
 		//É necessário informar as coordenadas em x do heroi no update
-		System.out.println(this.xGeneralCoordenate);
 		this.setPosition(this.xGeneralCoordenate, 0 );
 	}
 	

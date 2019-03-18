@@ -8,14 +8,17 @@ import com.badlogic.gdx.utils.Array;
 import br.edu.ufabc.gameover.models.BgWorld1;
 import br.edu.ufabc.gameover.models.CloudObject;
 import br.edu.ufabc.gameover.models.GameObject;
+import br.edu.ufabc.gameover.models.SwordHero;
 import br.edu.ufabc.gameover.models.TreeEnemy;
 
 public class GameAction {
 	
+	protected SwordHero hero;
 	protected BgWorld1 bg;
 	protected Array<GameObject> objects;
 	private int xGeneralCoordenate = 0; //posicao da tela 
 	protected SpriteBatch sprite;
+	
 	
 	public GameAction() {
 		
@@ -26,6 +29,7 @@ public class GameAction {
 		objects.add(new TreeEnemy());
 		
 		sprite = new SpriteBatch();
+		hero = new SwordHero();
 	}
 	
 	
@@ -35,15 +39,19 @@ public class GameAction {
 		for (GameObject o: objects) {
 			o.update();
 		}
-		
+		hero.update();
 		
 		if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-			System.out.println("Andou direita");
+			this.hero.moveHorizontal(-5);
 			xGeneralCoordenate -= 5;
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-			System.out.println("Andou esquerda");
-			if(xGeneralCoordenate < - 5) xGeneralCoordenate += 5;
+			
+			if(xGeneralCoordenate < - 5) { xGeneralCoordenate += 5; this.hero.moveHorizontal(5);}
+		}
+		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){  
+			int damage = this.hero.executeAttack(1);
+			System.out.println(damage);
 		}
 	}
 	

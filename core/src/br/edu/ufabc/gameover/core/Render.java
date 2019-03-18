@@ -20,6 +20,7 @@ public class Render {
 		for (GameObject o: gameAction.objects) {
 			o.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
 		}
+		gameAction.hero.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
 		gameAction.sprite.end();
 		
 		

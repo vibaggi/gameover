@@ -7,11 +7,13 @@ public abstract class PassiveEnemy extends GameObject{
 	private boolean detectedHero = false; //Diz se o inimigo está em perseguicao ao heroi 	
 	private boolean closedToHero = false; //Diz se está perto o suficiente do inimigo
 	private int hitPoint; //Valor do dano do inimigo
+	private int hp;
+	private String name;
 	
-	
-	PassiveEnemy(Texture texture, int hitPoint) {
+	PassiveEnemy(Texture texture, int hitPoint, String name) {
 		super(texture);
-		this.hitPoint = hitPoint;
+		this.hitPoint	= hitPoint;
+		this.name 		= name;
 	}
 	
 	public void update() {

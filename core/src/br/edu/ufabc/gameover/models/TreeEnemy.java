@@ -11,11 +11,10 @@ public class TreeEnemy extends PassiveEnemy{
 	private int walkingTarget = 0; //Passos que faltam para chegar ao destino. Anda para direita se positivo, esquerda se negativo.
 	
 	public TreeEnemy() {
-		super(new Texture("tree/sprite1.png"), 1);
+		super(new Texture("tree/sprite1.png"), 1, "Tronco Maldito");
 		
 		this.setPosition(this.x, this.y);
 		
-		// TODO Auto-generated constructor stub
 	}
 	
 	
@@ -46,23 +45,12 @@ public class TreeEnemy extends PassiveEnemy{
 		//Esquema para trocar o sprite. 
 		//TODO diminuir a velocidade de troca de sprites.
 		this.frameState++;
-		switch (this.frameState) {
-		case 1:
-			this.setTexture(new Texture("tree/sprite1.png"));
-			break;
-		case 2:
-			this.setTexture(new Texture("tree/sprite2.png"));
-			break;
-		case 3:
-			this.setTexture(new Texture("tree/sprite3.png"));
-			break;
-		case 4:
-			this.setTexture(new Texture("tree/sprite4.png"));
-			break;
-		case 5:
-			this.frameState = 1;
-			break;
-		}
+		if(frameState < 25) this.setTexture(new Texture("tree/sprite1.png"));
+		else if(frameState < 50) this.setTexture(new Texture("tree/sprite2.png"));
+		else if(frameState < 75) this.setTexture(new Texture("tree/sprite3.png"));
+		else if(frameState < 100) this.setTexture(new Texture("tree/sprite4.png"));
+		else this.frameState = 1;
+		
 		
 		
 	}

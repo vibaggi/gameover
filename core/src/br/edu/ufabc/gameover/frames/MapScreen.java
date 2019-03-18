@@ -1,16 +1,7 @@
 package br.edu.ufabc.gameover.frames;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Matrix4;
-
 import br.edu.ufabc.gameover.core.GameAction;
 import br.edu.ufabc.gameover.core.Render;
-import br.edu.ufabc.gameover.models.CloudObject;
-import br.edu.ufabc.gameover.models.TreeEnemy;
 
 public class MapScreen extends MyScreen{
 
