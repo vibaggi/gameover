@@ -45,5 +45,13 @@ public abstract class GameObject{
 		this.texture = tx;
 	}
 	
+	public int getXpos() {
+		return this.xPos;
+	}
+	
+	public int getYpos() {
+		return this.yPos;
+	}
+	
 
 }

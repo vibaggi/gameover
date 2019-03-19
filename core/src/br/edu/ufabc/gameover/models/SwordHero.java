@@ -11,7 +11,7 @@ public class SwordHero extends Hero{
 	
 
 	public SwordHero() {
-		super(new Texture("heroAwaitingR.png"), hpSH, hitPointSH, staminaSH, defensePoint);
+		super(new Texture("swordHero/heroAwaitingR.png"), hpSH, hitPointSH, staminaSH, defensePoint);
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -21,7 +21,8 @@ public class SwordHero extends Hero{
 	 * @return
 	 */
 	public int executeAttack(int numberAttack) {
-		if(this.status == "awaiting") {
+		if(this.status == "awaiting" || this.status == "walking") {
+			//Ataque interrompe qualquer um dos status acima, menos o "receive hit"
 			this.statusChange("attacking");
 			return this.getHitPoint();
 		}
@@ -35,15 +36,22 @@ public class SwordHero extends Hero{
 	public Texture getTextureByState() {
 		Texture tx;
 		if(this.status == "attacking") {
-			if(this.rightOrientation) 	tx = new Texture("heroAttackingR.png");
-			else 						tx = new Texture("heroAttackingL.png");
+			if(this.rightOrientation) 	tx = new Texture("swordHero/heroAttackingR.png");
+			else 						tx = new Texture("swordHero/heroAttackingL.png");
 		}
-		else if(this.status == "defending") {
-			tx = new Texture("heroDefending.png");
+		else if(this.status == "walking") {
+			if(this.rightOrientation) {
+				if(this.xPos%100 > 50)  tx = new Texture("swordHero/herowalk1R.png");
+				else					tx = new Texture("swordHero/herowalk2R.png");
+			}
+			else {
+				if(this.xPos%100 > 50)  tx = new Texture("swordHero/herowalk1L.png");
+				else					tx = new Texture("swordHero/herowalk2L.png");
+			}
 		}
 		else {
-			if(this.rightOrientation) 	tx = new Texture("heroAwaitingR.png");
-			else 						tx = new Texture("heroAwaitingL.png");
+			if(this.rightOrientation) 	tx = new Texture("swordHero/heroAwaitingR.png");
+			else 						tx = new Texture("swordHero/heroAwaitingL.png");
 		}
 		
 		return tx;

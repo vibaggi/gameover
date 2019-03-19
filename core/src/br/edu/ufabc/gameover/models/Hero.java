@@ -71,6 +71,7 @@ public abstract class Hero extends GameObject{
 		if(xDistance > 0) 	this.rightOrientation = false;
 		else				this.rightOrientation = true;
 		this.x -= xDistance;
+		if(this.status != "attacking") this.statusChange("walking"); //Estado de andar não sobreescreve o de ataque
 	}
 	
 	
@@ -80,7 +81,7 @@ public abstract class Hero extends GameObject{
 	
 	public void statusChange(String status) {
 		this.status = status;
-		this.statusTime = 25;
+		this.statusTime = 20;
 	}
 	
 	public abstract int executeAttack(int attackNum);
