@@ -21,7 +21,7 @@ public class SwordHero extends Hero{
 	 * @return
 	 */
 	public int executeAttack(int numberAttack) {
-		if(this.status == "awaiting" || this.status == "walking") {
+		if(this.status == "awaiting" || this.status == "walking" || this.status == "defensing" || this.status == "jumping") {
 			//Ataque interrompe qualquer um dos status acima, menos o "receive hit"
 			this.statusChange("attacking");
 			return this.getHitPoint();
@@ -39,6 +39,21 @@ public class SwordHero extends Hero{
 			if(this.rightOrientation) 	tx = new Texture("swordHero/heroAttackingR.png");
 			else 						tx = new Texture("swordHero/heroAttackingL.png");
 		}
+		else if(this.status == "defensing") {
+			if(this.rightOrientation) 	tx = new Texture("swordHero/defenseR.png");
+			else 						tx = new Texture("swordHero/defenseL.png");
+		}
+		
+		else if(this.status == "jumping") {
+			if(this.rightOrientation) 	tx = new Texture("swordHero/jumpingR.png");
+			else 						tx = new Texture("swordHero/jumpingL.png");
+		}
+		
+		else if(this.status == "dying") {
+			if(this.rightOrientation) 	tx = new Texture("swordHero/deathR.png");
+			else 						tx = new Texture("swordHero/deathL.png");
+		}
+		
 		else if(this.status == "walking") {
 			if(this.rightOrientation) {
 				if(this.xPos%100 > 50)  tx = new Texture("swordHero/herowalk1R.png");
@@ -60,3 +75,4 @@ public class SwordHero extends Hero{
 	
 
 }
+

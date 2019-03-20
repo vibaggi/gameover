@@ -47,6 +47,17 @@ public class GameAction {
 			
 			if(xGeneralCoordenate < - 5) { xGeneralCoordenate += 5; this.hero.moveHorizontal(5);}
 		}
+		
+		if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+					
+			this.hero.statusChange("defensing");
+		}
+		
+//		if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+//			
+//	
+//		}
+//		
 		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){  
 			int damage = this.hero.executeAttack(1);
 			if(damage > 0) { //se o ataque for zero, quer dizer que não pode ser realizado.
@@ -91,3 +102,4 @@ public class GameAction {
 	}
 	
 }
+
