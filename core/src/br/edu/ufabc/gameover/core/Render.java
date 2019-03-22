@@ -1,6 +1,7 @@
 package br.edu.ufabc.gameover.core;
 
 import br.edu.ufabc.gameover.models.GameObject;
+import br.edu.ufabc.gameover.models.PassiveEnemy;
 
 public class Render {
 	
@@ -19,6 +20,9 @@ public class Render {
 		gameAction.bg.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
 		for (GameObject o: gameAction.objects) {
 			o.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
+		}
+		for (PassiveEnemy e: gameAction.enemies) {
+			e.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
 		}
 		gameAction.hero.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
 		gameAction.sprite.end();

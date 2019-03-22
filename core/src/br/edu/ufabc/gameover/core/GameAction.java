@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import br.edu.ufabc.gameover.models.BgWorld1;
 import br.edu.ufabc.gameover.models.CloudObject;
 import br.edu.ufabc.gameover.models.GameObject;
+import br.edu.ufabc.gameover.models.PassiveEnemy;
 import br.edu.ufabc.gameover.models.SwordHero;
 import br.edu.ufabc.gameover.models.TreeEnemy;
 import br.edu.ufabc.gameover.physics.AttackZone;
@@ -18,6 +19,7 @@ public class GameAction {
 	protected SwordHero hero;
 	protected BgWorld1 bg;
 	protected Array<GameObject> objects;
+	protected Array<PassiveEnemy> enemies;
 	protected Array<AttackZone> attackZones;
 	private int xGeneralCoordenate = 0; //posicao da tela 
 	protected SpriteBatch sprite;
@@ -26,11 +28,12 @@ public class GameAction {
 	public GameAction() {
 		
 		objects = new Array<GameObject>(); //iniciando arrays de objetos na tela
+		enemies = new Array<PassiveEnemy>();
 		attackZones = new Array<AttackZone>();
 		bg = new BgWorld1(); //iniciando plano de fundo
 		
 		objects.add(new CloudObject());
-		objects.add(new TreeEnemy());
+		enemies.add(new TreeEnemy());
 		
 		sprite = new SpriteBatch();
 		hero = new SwordHero();
@@ -72,14 +75,18 @@ public class GameAction {
 		for (GameObject o: objects) {
 			o.update();
 		}
+		for (PassiveEnemy e: enemies) {
+			e.update();
+		}
 		
 		//verificando se alguma zona de ataque acerta algum objeto.
 		for(AttackZone atk: attackZones) {
 			boolean hitAnyone = false;
-			for (GameObject o: objects) {
+			for (PassiveEnemy o: enemies) {
 				//verificar se obj sofreu ataque
 				if(atk.isObjReceiveAtk(o)) {
 					System.out.println("Dano recebido!");
+					if(o.receiveDamage(atk.getDamage())) enemies.removeValue(o, true);
 					hitAnyone = true;
 				}
 			}

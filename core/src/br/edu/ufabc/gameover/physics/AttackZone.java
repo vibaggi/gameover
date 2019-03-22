@@ -54,5 +54,9 @@ public abstract class AttackZone {
 		if(obj.getXpos()> this.x1 && obj.getXpos() < this.x2) return true;
 		return false;
 	}
+	
+	public int getDamage() {
+		return this.damageZone;
+	}
 
 }

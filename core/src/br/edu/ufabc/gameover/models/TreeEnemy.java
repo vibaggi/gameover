@@ -8,7 +8,7 @@ public class TreeEnemy extends PassiveEnemy{
 	private int walkingTarget = 0; //Passos que faltam para chegar ao destino. Anda para direita se positivo, esquerda se negativo.
 	
 	public TreeEnemy() {
-		super(new Texture("tree/sprite1.png"), 1, "Tronco Maldito");
+		super(new Texture("tree/sprite1L.png"), 1, "Tronco Maldito");
 	}
 	
 	
@@ -23,11 +23,12 @@ public class TreeEnemy extends PassiveEnemy{
 			else { this.moveHorizontal(-1); walkingTarget++;}
 			
 			//caso acabe os passos mudar estado
-			if(walkingTarget == 0) this.status = "awaiting";
+			if(walkingTarget == 0) this.statusChange("awaiting");
 			
 		}else {
-			this.status = "walking";								//inicia estado de andar
+			
 			if(Math.random() < 0.1) {								//Aqui sorteamos o tempo que ele ficará parado 
+				this.statusChange("walking");						//inicia estado de andar
 				if(Math.random() > 0.5) this.walkingTarget = 50; 	//define que vai andar para direita
 				else this.walkingTarget = -50;						//define que vai andar para a esquerda
 			}
@@ -58,25 +59,32 @@ public class TreeEnemy extends PassiveEnemy{
 	@Override
 	public Texture getTextureByState() {
 		
-		Texture tx = new Texture("tree/sprite1.png"); //inicialização padrão
+		Texture tx = new Texture("tree/sprite1L.png"); //inicialização padrão
 		
 		this.frameState++; //contador que auxilia a animação
 		
-		if(status == "walking") {
+		if(status == "takingHit") {
+			if(rightOrientation) 	tx = new Texture("tree/spriteHitR.png");
+			else					tx = new Texture("tree/spriteHitL.png");
+		}else if(status == "walking") {
 			if(rightOrientation) {
-				if(frameState < 25) tx = new Texture("tree/sprite1.png");
-				else if(frameState < 50) tx = new Texture("tree/sprite2.png");
-				else if(frameState < 75) tx = new Texture("tree/sprite3.png");
-				else if(frameState < 100) tx = new Texture("tree/sprite4.png");
+				if(frameState < 25) tx = new Texture("tree/sprite1R.png");
+				else if(frameState < 50) tx = new Texture("tree/sprite2R.png");
+				else if(frameState < 75) tx = new Texture("tree/sprite3R.png");
+				else if(frameState < 100) tx = new Texture("tree/sprite4R.png");
 				else this.frameState = 1;
 			}else {
-				
+				if(frameState < 25) tx = new Texture("tree/sprite1L.png");
+				else if(frameState < 50) tx = new Texture("tree/sprite2L.png");
+				else if(frameState < 75) tx = new Texture("tree/sprite3L.png");
+				else if(frameState < 100) tx = new Texture("tree/sprite4L.png");
+				else this.frameState = 1;
 			}
 		}else {
 			if(rightOrientation) {
-				tx = new Texture("tree/sprite1.png");
+				tx = new Texture("tree/sprite1R.png");
 			}else {
-				tx = new Texture("tree/sprite1.png");
+				tx = new Texture("tree/sprite1L.png");
 			}
 		}
 		
