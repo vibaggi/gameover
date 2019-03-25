@@ -1,5 +1,8 @@
 package br.edu.ufabc.gameover.core;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+
 import br.edu.ufabc.gameover.models.GameObject;
 import br.edu.ufabc.gameover.models.PassiveEnemy;
 
@@ -7,10 +10,12 @@ public class Render {
 	
 	private GameAction gameAction;
 	
+	private BitmapFont bitmapFont; //para interface
+	
 	public Render(GameAction action) {
 		// TODO Auto-generated constructor stub
 		this.gameAction = action;
-		
+		bitmapFont = new BitmapFont(Gdx.files.internal("fonts/myfont.fnt"));
 		
 	}
 	
@@ -25,6 +30,10 @@ public class Render {
 			e.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
 		}
 		gameAction.hero.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
+		
+		//Atualizando interface
+		bitmapFont.draw(gameAction.sprite, "Pontuacao: "+gameAction.record, 350, 460);
+		
 		gameAction.sprite.end();
 		
 		

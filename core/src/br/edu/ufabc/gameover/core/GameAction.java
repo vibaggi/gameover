@@ -24,6 +24,9 @@ public class GameAction {
 	private int xGeneralCoordenate = 0; //posicao da tela 
 	protected SpriteBatch sprite;
 	
+	//Interface
+	int record; //sistema de pontos
+	
 	
 	public GameAction() {
 		
@@ -32,11 +35,21 @@ public class GameAction {
 		attackZones = new Array<AttackZone>();
 		bg = new BgWorld1(); //iniciando plano de fundo
 		
+		//geracao de objetos de cenario
 		objects.add(new CloudObject());
-		enemies.add(new TreeEnemy());
+		
+		
+		//geracao de inimigos
+		int y = 90;
+		for (int i = 0; i < 5; i++) {
+			enemies.add(new TreeEnemy((int)(Math.random()*500)+100, y));
+		}
+		
 		
 		sprite = new SpriteBatch();
 		hero = new SwordHero();
+		
+		record = 0;
 	}
 	
 	
@@ -88,6 +101,7 @@ public class GameAction {
 					System.out.println("Dano recebido!");
 					if(o.receiveDamage(atk.getDamage())) enemies.removeValue(o, true);
 					hitAnyone = true;
+					this.record += atk.getDamage();
 				}
 			}
 			

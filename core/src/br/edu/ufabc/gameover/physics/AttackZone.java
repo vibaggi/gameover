@@ -41,6 +41,7 @@ public abstract class AttackZone {
 	
 	//Decrementa tempo que falta para expirar zona de ataque. E retorna tempo.
 	public int update() {
+		this.behavior();
 		return --duration;
 	}
 	
@@ -58,5 +59,7 @@ public abstract class AttackZone {
 	public int getDamage() {
 		return this.damageZone;
 	}
+	
+	abstract public void behavior(); //define o comportamento do objeto
 
 }

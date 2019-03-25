@@ -24,8 +24,10 @@ public abstract class PassiveEnemy extends GameObject{
 	private int x = 200;
 	private int y = 90;
 	
-	PassiveEnemy(Texture texture, int hitPoint, String name) {
+	PassiveEnemy(Texture texture, int hitPoint, String name, int xPosInitial, int yPosInitial) {
 		super(texture);
+		this.x = xPosInitial;
+		this.y = yPosInitial;
 		this.hitPoint	= hitPoint;
 		this.name 		= name;
 		this.setPosition(x, y);
