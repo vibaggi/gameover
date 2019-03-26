@@ -5,14 +5,15 @@ import com.badlogic.gdx.graphics.Texture;
 public abstract class Hero extends GameObject{
 
 	//Propriedades
+	private int maxHP;
 	private int HP;			//HP atual
-	private int hitPoint; 	//Pontos de dano que inflinge 
+	private int hitPoint; 	//Pontos de dano que inflinge
+	private int maxStamina;
 	private int stamina;	//Energia atual, usada para lançar golpes
 	private int defensePoint;	//Pontos de defesa usada quando está defendendo
 	
 	//variaveis de estado
 	protected String status = "awaiting"; //Estados: awaiting, attacking, defending, dying, takingHit
-	protected boolean rightOrientation = true; //Diz para qual lado o personagem está olhando
 	private int statusTime = 0;
 	private int hitPointReceived = 0; 	//Quando 0 significa que não recebeu nenhum dano.
 	private int x = 50;
@@ -21,9 +22,11 @@ public abstract class Hero extends GameObject{
 	
 	Hero(Texture texture, int HP, int hitPoint, int stamina, int defensePoint) {
 		super(texture);
+		this.maxHP 			= HP;
 		this.HP 			= HP;
 		this.hitPoint 		= hitPoint;
 		this.stamina 		= stamina;
+		this.maxStamina		= stamina;
 		this.defensePoint 	= defensePoint;
 		
 		this.setPosition(x, y);
@@ -62,6 +65,7 @@ public abstract class Hero extends GameObject{
 		
 		//Limpando variaveis
 		this.hitPointReceived = 0;
+		if(this.stamina < this.maxStamina) this.stamina++; //recuperando stamina com o tempo
 		
 		this.setPosition(x, y);
 		
@@ -99,4 +103,35 @@ public abstract class Hero extends GameObject{
 		return this.hitPoint;
 	}
 	
+	
+	
+	public int getMaxHP() {
+		return maxHP;
+	}
+
+	public int getHP() {
+		return HP;
+	}
+
+	public int getMaxStamina() {
+		return maxStamina;
+	}
+
+	public int getStamina() {
+		return stamina;
+	}
+
+	/**
+	 * Retorna se é possivel gastar stamina, returna false avisando que não é possivel gastar.
+	 * @param quant
+	 * @return
+	 */
+	public boolean spendStamina(int quant) {
+		if(this.stamina > quant) {
+			this.stamina -= quant;
+			System.out.println(this.stamina);
+			return true;
+		}
+		return false;
+	}
 }

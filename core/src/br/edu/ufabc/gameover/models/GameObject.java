@@ -13,7 +13,7 @@ public abstract class GameObject{
 	private Texture texture; 	//imagem 
 	int xPos = 0;				//posicao no X
 	int yPos = 0;				//posicao no Y
-	
+	protected boolean rightOrientation; //Diz para qual lado o personagem está olhando
 	
 	/*
 	 * Classe abstratas de todos os objetos que são Sprites.
@@ -52,6 +52,12 @@ public abstract class GameObject{
 	public int getYpos() {
 		return this.yPos;
 	}
+
+	public boolean isRightOrientation() {
+		return rightOrientation;
+	}
+	
+	
 	
 
 }

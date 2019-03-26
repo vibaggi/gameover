@@ -12,7 +12,9 @@ import br.edu.ufabc.gameover.models.PassiveEnemy;
 import br.edu.ufabc.gameover.models.SwordHero;
 import br.edu.ufabc.gameover.models.TreeEnemy;
 import br.edu.ufabc.gameover.physics.AttackZone;
+import br.edu.ufabc.gameover.physics.ExplosionBladesAttack;
 import br.edu.ufabc.gameover.physics.PhysicAttack;
+import br.edu.ufabc.gameover.physics.ProjetilAttack;
 
 public class GameAction {
 	
@@ -20,7 +22,8 @@ public class GameAction {
 	protected BgWorld1 bg;
 	protected Array<GameObject> objects;
 	protected Array<PassiveEnemy> enemies;
-	protected Array<AttackZone> attackZones;
+	protected Array<PhysicAttack> attackZones;
+	protected Array<ProjetilAttack> projetilZones;
 	private int xGeneralCoordenate = 0; //posicao da tela 
 	protected SpriteBatch sprite;
 	
@@ -32,7 +35,8 @@ public class GameAction {
 		
 		objects = new Array<GameObject>(); //iniciando arrays de objetos na tela
 		enemies = new Array<PassiveEnemy>();
-		attackZones = new Array<AttackZone>();
+		attackZones = new Array<PhysicAttack>();
+		projetilZones = new Array<ProjetilAttack>();
 		bg = new BgWorld1(); //iniciando plano de fundo
 		
 		//geracao de objetos de cenario
@@ -83,6 +87,15 @@ public class GameAction {
 			//Criar zona de ataque para verificar se algum inimigo foi atingido
 		}
 		
+		if(Gdx.input.isKeyJustPressed(Input.Keys.X)){  
+			int damage = this.hero.executeAttack(2);
+			if(damage > 0) { //se o ataque for zero, quer dizer que não pode ser realizado.
+				ExplosionBladesAttack atk = new ExplosionBladesAttack(this.hero, "hero");
+				projetilZones.add(atk);
+			}
+			//Criar zona de ataque para verificar se algum inimigo foi atingido
+		}
+		
 		//fazendo update dos objetos
 		bg.update();
 		for (GameObject o: objects) {
@@ -93,7 +106,7 @@ public class GameAction {
 		}
 		
 		//verificando se alguma zona de ataque acerta algum objeto.
-		for(AttackZone atk: attackZones) {
+		for(PhysicAttack atk: attackZones) {
 			boolean hitAnyone = false;
 			for (PassiveEnemy o: enemies) {
 				//verificar se obj sofreu ataque
@@ -109,6 +122,27 @@ public class GameAction {
 			if(atk.update() <= 0 || hitAnyone) {
 				//atk.update retorna o numero de frames que falta para o atkzone sumir.
 				attackZones.removeValue(atk, true);
+				System.out.println("Zona de ataque removida");
+			}
+		}
+		
+		//verificando projeteis
+		for(ProjetilAttack atk: projetilZones) {
+			boolean hitAnyone = false;
+			for (PassiveEnemy o: enemies) {
+				//verificar se obj sofreu ataque
+				if(atk.isObjReceiveAtk(o)) {
+					System.out.println("Dano recebido!");
+					if(o.receiveDamage(atk.getDamage())) enemies.removeValue(o, true);
+					hitAnyone = true;
+					this.record += atk.getDamage();
+				}
+			}
+			
+			//por fim verifica se o ataque acertou algum alvo ou acabou seu tempo. Em caso positivo será retirado da array.
+			if(atk.update() <= 0 || hitAnyone) {
+				//atk.update retorna o numero de frames que falta para o atkzone sumir.
+				projetilZones.removeValue(atk, true);
 				System.out.println("Zona de ataque removida");
 			}
 		}

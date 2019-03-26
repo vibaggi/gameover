@@ -1,22 +1,20 @@
 package br.edu.ufabc.gameover.physics;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class ProjetilAttack extends AttackZone{
+public abstract class ProjetilAttack extends AttackZone{
 
 	private Texture tx;
 	
-	public ProjetilAttack(Texture tx, int x1, int x2, int y1, int y2, int damage, int duration, String creator) {
-		super(x1, x2, y1, y2, damage, duration, creator);
+	public ProjetilAttack(Texture tx, int x1, int width, int y1, int height, int damage, int duration, String creator) {
+		super(x1, x1+width, y1, y1+height, damage, duration, creator);
 		this.tx = tx;
 	}
-
-	@Override
-	public void behavior() {
-		// TODO Auto-generated method stub
-		
-	}
 	
+	public void draw(SpriteBatch sprite, int xGeneralCoordenate) {
+		sprite.draw(tx, this.getX1()+xGeneralCoordenate, this.getY1());
+	}
 	
 
 }

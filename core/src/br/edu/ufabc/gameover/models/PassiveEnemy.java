@@ -12,7 +12,6 @@ public abstract class PassiveEnemy extends GameObject{
 	private int statusTime = 0;
 	private boolean detectedHero = false; //Diz se o inimigo está em perseguicao ao heroi 	
 	private boolean closedToHero = false; //Diz se está perto o suficiente do inimigo
-	protected boolean rightOrientation = true; //Diz para qual lado o personagem está olhando
 	private BitmapFont bitmapFont;
 	
 	

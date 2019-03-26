@@ -18,6 +18,7 @@ public abstract class AttackZone {
 	private int damageZone;
 	private int duration;
 	private String creator;
+	protected boolean orientationMovRight = true; 
 	
 	public AttackZone(int x1, int x2, int y1, int y2, int damage, int duration, String creator ) {
 		this.x1 = x1;
@@ -62,4 +63,31 @@ public abstract class AttackZone {
 	
 	abstract public void behavior(); //define o comportamento do objeto
 
+	public int getX1() {
+		return x1;
+	}
+
+	public int getX2() {
+		return x2;
+	}
+
+	public int getY1() {
+		return y1;
+	}
+
+	public int getY2() {
+		return y2;
+	}
+
+	public int getDamageZone() {
+		return damageZone;
+	}
+
+	public String getCreator() {
+		return creator;
+	}
+
+	
+	
+	
 }

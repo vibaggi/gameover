@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class SwordHero extends Hero{
 	
 	static int hpSH = 100;
-	static int staminaSH = 50;
+	static int staminaSH = 1000;
 	static int hitPointSH = 10;
 	static int defensePoint = 5;
 	
@@ -24,6 +24,15 @@ public class SwordHero extends Hero{
 		if(this.status == "awaiting" || this.status == "walking" || this.status == "defensing" || this.status == "jumping") {
 			//Ataque interrompe qualquer um dos status acima, menos o "receive hit"
 			this.statusChange("attacking");
+			//numberAttack 1 não tem gasto de stamina 
+			if(numberAttack == 2) {
+				//Se não for possivel gastar a stamina, não realiza o ataque
+				if(!this.spendStamina(100)) return 0;
+			}
+			else if(numberAttack == 3) {
+				//Se não for possivel gastar a stamina, não realiza o ataque
+				if(this.spendStamina(300)) return 0;
+			}
 			return this.getHitPoint();
 		}
 		return 0;
