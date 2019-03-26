@@ -8,10 +8,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public abstract class PassiveEnemy extends GameObject{
 
 	//propriedades de estado
-	protected String status = "awaiting"; //Estados: awaiting, attacking, defending, dying, takingHit, walking
+	protected String status = "awaiting"; 	//Estados: awaiting, attacking, defending, dying, takingHit, walking
 	private int statusTime = 0;
-	private boolean detectedHero = false; //Diz se o inimigo está em perseguicao ao heroi 	
-	private boolean closedToHero = false; //Diz se está perto o suficiente do inimigo
+	private boolean detectedHero = false; 	//Diz se o inimigo está em perseguicao ao heroi
+	private int targetX, targetY; 			//Target diz respeito ao destino que o inimigo tem para o alvo (Hero)
+	private boolean closedToHero = false; 	//Diz se está perto o suficiente do inimigo
 	private BitmapFont bitmapFont;
 	
 	
@@ -35,7 +36,7 @@ public abstract class PassiveEnemy extends GameObject{
 		hp = 100;
 	}
 	
-	public void update() {
+	public void update(int heroXpos, int heroYpos, int[][]map) {
 		this.behavior();
 		this.setTexture(this.getTextureByState());
 	}
@@ -95,7 +96,7 @@ public abstract class PassiveEnemy extends GameObject{
 	 */
 	public boolean receiveDamage(int damage) {
 		this.statusChange("takingHit");
-//		this.detectedHero = true;
+		this.detectedHero = true;
 		this.hp -= damage;
 		return this.hp <= 0;
 	}

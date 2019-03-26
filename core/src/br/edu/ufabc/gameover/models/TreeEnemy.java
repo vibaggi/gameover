@@ -47,7 +47,7 @@ public class TreeEnemy extends PassiveEnemy{
 
 	@Override
 	public void pursue() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

@@ -23,7 +23,7 @@ public class SwordHero extends Hero{
 	public int executeAttack(int numberAttack) {
 		if(this.status == "awaiting" || this.status == "walking" || this.status == "defensing" || this.status == "jumping") {
 			//Ataque interrompe qualquer um dos status acima, menos o "receive hit"
-			this.statusChange("attacking");
+			
 			//numberAttack 1 não tem gasto de stamina 
 			if(numberAttack == 2) {
 				//Se não for possivel gastar a stamina, não realiza o ataque
@@ -33,6 +33,7 @@ public class SwordHero extends Hero{
 				//Se não for possivel gastar a stamina, não realiza o ataque
 				if(this.spendStamina(300)) return 0;
 			}
+			this.statusChange("attacking");
 			return this.getHitPoint();
 		}
 		return 0;

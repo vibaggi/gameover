@@ -15,7 +15,6 @@ abstract public class ScenarioObject extends GameObject{
 		this.moving();
 	}
 
-	@Override
 	public void update() {
 		this.behavior();
 		

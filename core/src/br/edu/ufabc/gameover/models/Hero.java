@@ -91,8 +91,8 @@ public abstract class Hero extends GameObject{
 	public abstract int executeAttack(int attackNum);
 	public abstract Texture getTextureByState();
 	
-	@Override
-	public void update() {
+
+	public void update(int[][]map) {
 		//attackReceivePoint: quando 0 significa que não houve ataque recebido.
 		this.behavior();
 		this.setTexture(this.getTextureByState());

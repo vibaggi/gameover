@@ -9,6 +9,7 @@ import br.edu.ufabc.gameover.models.BgWorld1;
 import br.edu.ufabc.gameover.models.CloudObject;
 import br.edu.ufabc.gameover.models.GameObject;
 import br.edu.ufabc.gameover.models.PassiveEnemy;
+import br.edu.ufabc.gameover.models.ScenarioObject;
 import br.edu.ufabc.gameover.models.SwordHero;
 import br.edu.ufabc.gameover.models.TreeEnemy;
 import br.edu.ufabc.gameover.physics.AttackZone;
@@ -20,12 +21,17 @@ public class GameAction {
 	
 	protected SwordHero hero;
 	protected BgWorld1 bg;
-	protected Array<GameObject> objects;
+	protected Array<ScenarioObject> objects;
 	protected Array<PassiveEnemy> enemies;
 	protected Array<PhysicAttack> attackZones;
 	protected Array<ProjetilAttack> projetilZones;
-	private int xGeneralCoordenate = 0; //posicao da tela 
+	
 	protected SpriteBatch sprite;
+	
+	//Sistemas de orientação
+	private int xGeneralCoordenate = 0; //posicao da tela 
+	private int [][] groundCoordenates; //coordenadas de orientação de chão. Usada pelo sistema de gravidade para puxar os objetos, inimigos e heroi para o chão.
+	
 	
 	//Interface
 	int record; //sistema de pontos
@@ -33,7 +39,7 @@ public class GameAction {
 	
 	public GameAction() {
 		
-		objects = new Array<GameObject>(); //iniciando arrays de objetos na tela
+		objects = new Array<ScenarioObject>(); //iniciando arrays de objetos na tela
 		enemies = new Array<PassiveEnemy>();
 		attackZones = new Array<PhysicAttack>();
 		projetilZones = new Array<ProjetilAttack>();
@@ -98,11 +104,11 @@ public class GameAction {
 		
 		//fazendo update dos objetos
 		bg.update();
-		for (GameObject o: objects) {
+		for (ScenarioObject o: objects) {
 			o.update();
 		}
 		for (PassiveEnemy e: enemies) {
-			e.update();
+			e.update(this.hero.getXpos(), this.hero.getYpos(), groundCoordenates);
 		}
 		
 		//verificando se alguma zona de ataque acerta algum objeto.

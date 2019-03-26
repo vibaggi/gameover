@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 
+import br.edu.ufabc.gameover.core.GameAction;
+
 public abstract class GameObject{
 	
 	//Atributos comuns do objeto
@@ -27,8 +29,6 @@ public abstract class GameObject{
 	 */
 	abstract public void behavior();
 	
-	
-	abstract public void update();
 	
 	public void draw(SpriteBatch batch, int xGeneralCoordenate) {
 		//Contem as informações do que exibir na tela
