@@ -153,7 +153,7 @@ public class GameAction {
 			}
 		}
 		
-		hero.update();
+		hero.update(groundCoordenates);
 		
 		
 	}
