@@ -8,7 +8,7 @@ public class TreeEnemy extends PassiveEnemy{
 	private int walkingTarget = 0; //Passos que faltam para chegar ao destino. Anda para direita se positivo, esquerda se negativo.
 	
 	public TreeEnemy(int xPosInitial, int yPosInitial) {
-		super(new Texture("tree/sprite1L.png"), 1, "Tronco Maldito", xPosInitial, yPosInitial);
+		super(new Texture("tree/sprite1L.png"), 1, "Tronco Maldito", xPosInitial, yPosInitial, 80, 80);
 	}
 	
 	

@@ -12,10 +12,10 @@ import br.edu.ufabc.gameover.models.PassiveEnemy;
 import br.edu.ufabc.gameover.models.ScenarioObject;
 import br.edu.ufabc.gameover.models.SwordHero;
 import br.edu.ufabc.gameover.models.TreeEnemy;
-import br.edu.ufabc.gameover.physics.AttackZone;
-import br.edu.ufabc.gameover.physics.ExplosionBladesAttack;
-import br.edu.ufabc.gameover.physics.PhysicAttack;
-import br.edu.ufabc.gameover.physics.ProjetilAttack;
+import br.edu.ufabc.gameover.physics.attack.AttackZone;
+import br.edu.ufabc.gameover.physics.attack.ExplosionBladesAttack;
+import br.edu.ufabc.gameover.physics.attack.PhysicAttack;
+import br.edu.ufabc.gameover.physics.attack.ProjetilAttack;
 
 public class GameAction {
 	
@@ -39,6 +39,8 @@ public class GameAction {
 	
 	public GameAction() {
 		
+		//
+		
 		objects = new Array<ScenarioObject>(); //iniciando arrays de objetos na tela
 		enemies = new Array<PassiveEnemy>();
 		attackZones = new Array<PhysicAttack>();
@@ -51,13 +53,13 @@ public class GameAction {
 		
 		//geracao de inimigos
 		int y = 90;
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 1; i++) {
 			enemies.add(new TreeEnemy((int)(Math.random()*500)+100, y));
 		}
 		
 		
 		sprite = new SpriteBatch();
-		hero = new SwordHero();
+		hero = new SwordHero(bg.getWorldGravity());
 		
 		record = 0;
 	}
@@ -79,6 +81,9 @@ public class GameAction {
 			this.hero.statusChange("defensing");
 		}
 		
+		if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+			this.hero.jump();
+		}
 //		if (Gdx.input.isKeyPressed(Input.Keys.W)) {
 //			
 //	

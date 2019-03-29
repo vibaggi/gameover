@@ -1,4 +1,4 @@
-package br.edu.ufabc.gameover.physics;
+package br.edu.ufabc.gameover.physics.attack;
 
 import br.edu.ufabc.gameover.models.GameObject;
 

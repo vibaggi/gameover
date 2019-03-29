@@ -24,8 +24,8 @@ public abstract class PassiveEnemy extends GameObject{
 	private int x = 200;
 	private int y = 90;
 	
-	PassiveEnemy(Texture texture, int hitPoint, String name, int xPosInitial, int yPosInitial) {
-		super(texture);
+	PassiveEnemy(Texture texture, int hitPoint, String name, int xPosInitial, int yPosInitial, int width, int height) {
+		super(texture, width, height);
 		this.x = xPosInitial;
 		this.y = yPosInitial;
 		this.hitPoint	= hitPoint;
@@ -37,6 +37,7 @@ public abstract class PassiveEnemy extends GameObject{
 	}
 	
 	public void update(int heroXpos, int heroYpos, int[][]map) {
+		
 		this.behavior();
 		this.setTexture(this.getTextureByState());
 	}
@@ -75,6 +76,9 @@ public abstract class PassiveEnemy extends GameObject{
 		if(xDistance > 0) 	this.rightOrientation = false;
 		else				this.rightOrientation = true;
 		this.x -= xDistance;
+	}
+	public void moveVertical(int yDistance) {
+		this.y -= yDistance;
 	}
 	
 	abstract public void walkingWay(); 	//Andar sem rumo

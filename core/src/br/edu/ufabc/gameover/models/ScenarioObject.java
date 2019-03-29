@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 abstract public class ScenarioObject extends GameObject{
 
 	ScenarioObject(Texture texture) {
-		super(texture);
+		super(texture, 200, 80);
 		// TODO Auto-generated constructor stub
 	}
 

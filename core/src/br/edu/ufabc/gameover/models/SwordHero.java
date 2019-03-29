@@ -10,8 +10,8 @@ public class SwordHero extends Hero{
 	static int defensePoint = 5;
 	
 
-	public SwordHero() {
-		super(new Texture("swordHero/heroAwaitingR.png"), hpSH, hitPointSH, staminaSH, defensePoint);
+	public SwordHero(float worldGravity) {
+		super(new Texture("swordHero/heroAwaitingR.png"), hpSH, hitPointSH, staminaSH, defensePoint, worldGravity, 80, 80);
 		// TODO Auto-generated constructor stub
 	}
 	

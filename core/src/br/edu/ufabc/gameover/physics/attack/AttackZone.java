@@ -1,4 +1,4 @@
-package br.edu.ufabc.gameover.physics;
+package br.edu.ufabc.gameover.physics.attack;
 
 import br.edu.ufabc.gameover.models.GameObject;
 
@@ -52,8 +52,8 @@ public abstract class AttackZone {
 	 * @return
 	 */
 	public boolean isObjReceiveAtk(GameObject obj){
-		//TODO implementar
-		if(obj.getXpos()> this.x1 && obj.getXpos() < this.x2) return true;
+
+		if( !(this.x2 < obj.getXpos() || this.x1 > obj.getX2pos()) && !( this.y2 <obj.getYpos() || this.y1 > obj.getY2pos()) ) return true;
 		return false;
 	}
 	

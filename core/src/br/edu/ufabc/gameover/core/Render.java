@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 import br.edu.ufabc.gameover.models.GameObject;
 import br.edu.ufabc.gameover.models.PassiveEnemy;
-import br.edu.ufabc.gameover.physics.AttackZone;
-import br.edu.ufabc.gameover.physics.ProjetilAttack;
+import br.edu.ufabc.gameover.physics.attack.AttackZone;
+import br.edu.ufabc.gameover.physics.attack.ProjetilAttack;
 
 public class Render {
 	

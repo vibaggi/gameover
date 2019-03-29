@@ -13,15 +13,21 @@ public abstract class GameObject{
 	
 	//Atributos comuns do objeto
 	private Texture texture; 	//imagem 
-	int xPos = 0;				//posicao no X
-	int yPos = 0;				//posicao no Y
+	int xPos = 0, width;		//posicao no X
+	int yPos = 0, height;		//posicao no Y
 	protected boolean rightOrientation; //Diz para qual lado o personagem está olhando
+	
+	
+	
+	
 	
 	/*
 	 * Classe abstratas de todos os objetos que são Sprites.
 	 * */
-	GameObject(Texture texture){
+	GameObject(Texture texture, int width, int height){
 		this.texture 	= texture;
+		this.width		= width;
+		this.height		= height;
 	}
 	
 	/**
@@ -51,6 +57,14 @@ public abstract class GameObject{
 	
 	public int getYpos() {
 		return this.yPos;
+	}
+	
+	public int getX2pos() {
+		return this.xPos+this.width;
+	}
+	
+	public int getY2pos() {
+		return this.yPos+this.height;
 	}
 
 	public boolean isRightOrientation() {

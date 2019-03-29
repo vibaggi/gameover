@@ -2,6 +2,8 @@ package br.edu.ufabc.gameover.models;
 
 import com.badlogic.gdx.graphics.Texture;
 
+import br.edu.ufabc.gameover.physics.environment.Gravity;
+
 public abstract class Hero extends GameObject{
 
 	//Propriedades
@@ -18,18 +20,24 @@ public abstract class Hero extends GameObject{
 	private int hitPointReceived = 0; 	//Quando 0 significa que não recebeu nenhum dano.
 	private int x = 50;
 	private int y = 90;
+	private Gravity gravity;
 	
 	
-	Hero(Texture texture, int HP, int hitPoint, int stamina, int defensePoint) {
-		super(texture);
+	Hero(Texture texture, int HP, int hitPoint, int stamina, int defensePoint, float worldGravity, int width, int height) {
+		super(texture, width, height);
 		this.maxHP 			= HP;
 		this.HP 			= HP;
 		this.hitPoint 		= hitPoint;
 		this.stamina 		= stamina;
 		this.maxStamina		= stamina;
 		this.defensePoint 	= defensePoint;
-		
+		this.gravity		= new Gravity(worldGravity);
 		this.setPosition(x, y);
+	}
+	
+	public void jump() {
+//		System.out.println(4);
+		this.gravity.jump(15);
 	}
 
 	@Override
@@ -78,6 +86,10 @@ public abstract class Hero extends GameObject{
 		if(this.status != "attacking") this.statusChange("walking"); //Estado de andar não sobreescreve o de ataque
 	}
 	
+	public void moveVertical(int yDistance) {
+		this.y += yDistance;
+	}
+	
 	
 	public void receivedDamage(int hit) {
 		this.hitPointReceived = hit;
@@ -95,6 +107,10 @@ public abstract class Hero extends GameObject{
 	public void update(int[][]map) {
 		//attackReceivePoint: quando 0 significa que não houve ataque recebido.
 		this.behavior();
+//		int[] chaos = map[1];
+		int movY = this.gravity.updateVector();
+		if(this.y + movY > 90) 	this.moveVertical(movY);
+		else					this.y = 90;
 		this.setTexture(this.getTextureByState());
 	}
 

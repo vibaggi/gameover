@@ -1,4 +1,4 @@
-package br.edu.ufabc.gameover.physics;
+package br.edu.ufabc.gameover.physics.attack;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
