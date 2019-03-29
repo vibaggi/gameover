@@ -38,6 +38,11 @@ public abstract class PassiveEnemy extends GameObject{
 	
 	public void update(int heroXpos, int heroYpos, int[][]map) {
 		
+		//atualizando localidade do heroi
+		this.targetX = heroXpos;
+		this.targetY = heroYpos;
+		
+		//executando comportamento
 		this.behavior();
 		this.setTexture(this.getTextureByState());
 	}
@@ -49,7 +54,7 @@ public abstract class PassiveEnemy extends GameObject{
 		this.statusTime--;
 		if(this.statusTime <= 0) this.statusChange("awaiting");
 		
-		if(this.status != "takingHit") { //inimigos sofrem delay ao serem atacados
+		if(this.status != "takingHit" && this.status != "attacking") { //inimigos sofrem delay ao serem atacados
 			
 			if(!this.detectedHero) {
 				//Enquanto não provocado, irá apenas andar sem rumo
@@ -58,10 +63,11 @@ public abstract class PassiveEnemy extends GameObject{
 				//Quando provocado 
 				if(!this.closedToHero) {
 					//Se longe do Heroi irá buscar um caminho até ele
-					this.pursue();
+					this.pursue(targetX,targetY);
 				}else {
 					//Se perto o suficiente do heroi tentará ataque
 					this.attack();
+					this.closedToHero = false; //após ataque vai obrigar inimigo a procurar heroi novamente.
 				}
 				
 			}
@@ -83,7 +89,7 @@ public abstract class PassiveEnemy extends GameObject{
 	
 	abstract public void walkingWay(); 	//Andar sem rumo
 	abstract public void attack();		//Atacar o heroi
-	abstract public void pursue();		//Perseguir o heroi 
+	abstract public void pursue(int heroXpos, int heroYpos);		//Perseguir o heroi 
 	abstract public Texture getTextureByState();
 	
 	//Adicionado barra de HP ao inimigo
@@ -108,6 +114,14 @@ public abstract class PassiveEnemy extends GameObject{
 	public void statusChange(String status) {
 		this.status = status;
 		this.statusTime = 20;
+	}
+	
+	protected void setClosedToHero(boolean close) {
+		this.closedToHero = close;
+	}
+	
+	protected boolean getClosedToHero() {
+		return this.closedToHero;
 	}
 	
 	

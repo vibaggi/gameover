@@ -18,7 +18,7 @@ public abstract class Hero extends GameObject{
 	protected String status = "awaiting"; //Estados: awaiting, attacking, defending, dying, takingHit
 	private int statusTime = 0;
 	private int hitPointReceived = 0; 	//Quando 0 significa que não recebeu nenhum dano.
-	private int x = 50;
+	private int x = 200;
 	private int y = 90;
 	private Gravity gravity;
 	

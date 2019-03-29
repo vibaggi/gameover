@@ -42,12 +42,20 @@ public class TreeEnemy extends PassiveEnemy{
 	@Override
 	public void attack() {
 		// TODO Auto-generated method stub
-		
+		this.statusChange("attacking");
 	}
 
 	@Override
-	public void pursue() {
-		
+	public void pursue(int targetX, int targetY) {
+		this.statusChange("pursuing");
+		if( (targetX-this.getXpos()) > 100 ) {
+			
+			this.moveHorizontal(-1);
+		}else if( (targetX-this.getXpos()) < - 100 ) {
+			this.moveHorizontal(1);
+		} else {
+			this.setClosedToHero(true);
+		}
 		
 	}
 
@@ -66,7 +74,7 @@ public class TreeEnemy extends PassiveEnemy{
 		if(status == "takingHit") {
 			if(rightOrientation) 	tx = new Texture("tree/spriteHitR.png");
 			else					tx = new Texture("tree/spriteHitL.png");
-		}else if(status == "walking") {
+		}else if(status == "walking" || status == "pursuing") {
 			if(rightOrientation) {
 				if(frameState < 25) tx = new Texture("tree/sprite1R.png");
 				else if(frameState < 50) tx = new Texture("tree/sprite2R.png");
