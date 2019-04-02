@@ -5,47 +5,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public abstract class PassiveEnemy extends GameObject{
+public abstract class PassiveEnemy extends Enemy{
 
-	//propriedades de estado
-	protected String status = "awaiting"; 	//Estados: awaiting, attacking, defending, dying, takingHit, walking
-	private int statusTime = 0;
-	private boolean detectedHero = false; 	//Diz se o inimigo está em perseguicao ao heroi
-	private int targetX, targetY; 			//Target diz respeito ao destino que o inimigo tem para o alvo (Hero)
-	private boolean closedToHero = false; 	//Diz se está perto o suficiente do inimigo
-	private BitmapFont bitmapFont;
-	
-	
-	//propriedades do inimigo
-	private int hitPoint; //Valor do dano do inimigo
-	private int hp;
-	private int hpTotal;
-	private String name;
-	private int x = 200;
-	private int y = 90;
-	
-	PassiveEnemy(Texture texture, int hitPoint, String name, int xPosInitial, int yPosInitial, int width, int height) {
-		super(texture, width, height);
-		this.x = xPosInitial;
-		this.y = yPosInitial;
-		this.hitPoint	= hitPoint;
-		this.name 		= name;
-		this.setPosition(x, y);
-		bitmapFont = new BitmapFont(Gdx.files.internal("fonts/myfont.fnt"));
-		hpTotal = 100;
-		hp = 100;
+
+	PassiveEnemy(Texture texture, int hitPoint, String name, int xPosInitial, int yPosInitial, int width, int height, int velWalk, int velPursue) {
+		super(texture, hitPoint, name, xPosInitial, yPosInitial, width, height, velWalk, velPursue);
 	}
 	
-	public void update(int heroXpos, int heroYpos, int[][]map) {
-		
-		//atualizando localidade do heroi
-		this.targetX = heroXpos;
-		this.targetY = heroYpos;
-		
-		//executando comportamento
-		this.behavior();
-		this.setTexture(this.getTextureByState());
-	}
 
 	@Override
 	public void behavior() {
@@ -63,66 +29,65 @@ public abstract class PassiveEnemy extends GameObject{
 				//Quando provocado 
 				if(!this.closedToHero) {
 					//Se longe do Heroi irá buscar um caminho até ele
+					this.statusChange("pursuing");
 					this.pursue(targetX,targetY);
 				}else {
 					//Se perto o suficiente do heroi tentará ataque
+					this.statusChange("attacking");
 					this.attack();
 					this.closedToHero = false; //após ataque vai obrigar inimigo a procurar heroi novamente.
 				}
-				
 			}
-			
 		}
-		this.setPosition(this.x, this.y);
-		
 		
 	}
 	
-	public void moveHorizontal(int xDistance) {
-		if(xDistance > 0) 	this.rightOrientation = false;
-		else				this.rightOrientation = true;
-		this.x -= xDistance;
-	}
-	public void moveVertical(int yDistance) {
-		this.y -= yDistance;
-	}
 	
-	abstract public void walkingWay(); 	//Andar sem rumo
-	abstract public void attack();		//Atacar o heroi
-	abstract public void pursue(int heroXpos, int heroYpos);		//Perseguir o heroi 
-	abstract public Texture getTextureByState();
 	
-	//Adicionado barra de HP ao inimigo
-	public void draw(SpriteBatch batch, int xGeneralCoordenate) {
-		bitmapFont.draw(batch, String.valueOf(hp)+"/"+String.valueOf(hpTotal), this.getXpos()+xGeneralCoordenate, this.getYpos());
-		bitmapFont.draw(batch, name, this.getXpos()+xGeneralCoordenate, this.getYpos()-50);
-		super.draw(batch, xGeneralCoordenate);
-	}
+	
 	
 	/**
-	 * Retorna true quando inimigo zerou a vida
-	 * @param damage passar dano a ser recebido pelo inimigo
-	 * @return
+	 * Método de perseguicao ao heroi. Disparado pelo behavior
+	 * @param targetX
+	 * @param targetY
 	 */
-	public boolean receiveDamage(int damage) {
-		this.statusChange("takingHit");
-		this.detectedHero = true;
-		this.hp -= damage;
-		return this.hp <= 0;
+	public void pursue(int targetX, int targetY) {
+		if( (targetX-this.getXpos()) > 50 ) {
+			
+			this.moveHorizontal(-velPursue);
+		}else if( (targetX-this.getXpos()) < - 50 ) {
+			this.moveHorizontal(velPursue);
+		} else {
+			this.setClosedToHero(true);
+		}
+		
 	}
 	
-	public void statusChange(String status) {
-		this.status = status;
-		this.statusTime = 20;
+	public void walkingWay() {
+		//Inicialmente o walkingWay não está considerando barreiras.
+		
+		//Se estiver andando, continua até acabar os passo (walkingTarget) ou encontrar uma barreira (ainda não implementado)
+		if(this.status == "walking") {
+			if(walkingTarget > 0) { this.moveHorizontal(velWalkingAway); walkingTarget--;}
+			else { this.moveHorizontal(-velWalkingAway); walkingTarget++;}
+			
+			//caso acabe os passos mudar estado
+			if(walkingTarget == 0) this.statusChange("awaiting");
+			
+		}else {
+			
+			if(Math.random() < 0.1) {								//Aqui sorteamos o tempo que ele ficará parado 
+				this.statusChange("walking");						//inicia estado de andar
+				if(Math.random() > 0.5) this.walkingTarget = 50; 	//define que vai andar para direita
+				else this.walkingTarget = -50;						//define que vai andar para a esquerda
+			}
+		}	
 	}
 	
-	protected void setClosedToHero(boolean close) {
-		this.closedToHero = close;
-	}
 	
-	protected boolean getClosedToHero() {
-		return this.closedToHero;
-	}
+	
+	
+	
 	
 	
 

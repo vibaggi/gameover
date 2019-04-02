@@ -1,13 +1,7 @@
 package br.edu.ufabc.gameover.models;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Matrix4;
-
-import br.edu.ufabc.gameover.core.GameAction;
 
 public abstract class GameObject{
 	

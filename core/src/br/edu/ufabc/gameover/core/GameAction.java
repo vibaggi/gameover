@@ -3,10 +3,12 @@ package br.edu.ufabc.gameover.core;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.Array;
 
 import br.edu.ufabc.gameover.models.BgWorld1;
 import br.edu.ufabc.gameover.models.CloudObject;
+import br.edu.ufabc.gameover.models.CogsEnemy;
 import br.edu.ufabc.gameover.models.GameObject;
 import br.edu.ufabc.gameover.models.PassiveEnemy;
 import br.edu.ufabc.gameover.models.ScenarioObject;
@@ -53,8 +55,12 @@ public class GameAction {
 		
 		//geracao de inimigos
 		int y = 90;
-		for (int i = 0; i < 1; i++) {
-			enemies.add(new TreeEnemy((int)(Math.random()*500)+100, y));
+		for (int i = 0; i < 5; i++) {
+			enemies.add(new TreeEnemy((int)(Math.random()*1200)+100, y));
+		}
+		
+		for (int i = 0; i < 5; i++) {
+			enemies.add(new CogsEnemy((int)(Math.random()*1200)+1000, y));
 		}
 		
 		
