@@ -8,12 +8,21 @@ public class BgWorld1 extends ScenarioObject{
 	int xGeneralCoordenate;
 	float worldGravity;
 	
+	private int [][] groundCoordenates; //sistema de chao, respectivamente significa altura, posicao inicial e posicao final do chao
 	
 	public BgWorld1() {
 		super(new Texture("backgroundv1.png"));
 		// Iniciando posicoes
 		xGeneralCoordenate = 0;
 		worldGravity = (float)0.6;
+		
+		//coordenadas dos lugares mais altos primeiro
+		groundCoordenates = new int[][]{
+			{200, 250, 400},
+			{90, 0, 2280}, //ex: na altura 90 há chão do px 0 ao 100
+
+		};
+		
 	}
 
 	@Override
@@ -25,6 +34,10 @@ public class BgWorld1 extends ScenarioObject{
 
 	public float getWorldGravity() {
 		return worldGravity;
+	}
+	
+	public int[][] getWorldMap(){
+		return groundCoordenates;
 	}
 
 	

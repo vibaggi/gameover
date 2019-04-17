@@ -23,7 +23,7 @@ public abstract class Hero extends GameObject{
 	private Gravity gravity;
 	
 	
-	Hero(Texture texture, int HP, int hitPoint, int stamina, int defensePoint, float worldGravity, int width, int height) {
+	Hero(Texture texture, int HP, int hitPoint, int stamina, int defensePoint, float worldGravity, int width, int height, int[][] worldMap) {
 		super(texture, width, height);
 		this.maxHP 			= HP;
 		this.HP 			= HP;
@@ -31,7 +31,7 @@ public abstract class Hero extends GameObject{
 		this.stamina 		= stamina;
 		this.maxStamina		= stamina;
 		this.defensePoint 	= defensePoint;
-		this.gravity		= new Gravity(worldGravity);
+		this.gravity		= new Gravity(worldGravity, worldMap);
 		this.setPosition(x, y);
 	}
 	
@@ -96,8 +96,9 @@ public abstract class Hero extends GameObject{
 	}
 	
 	public void statusChange(String status) {
-		this.status = status;
 		this.statusTime = 20;
+		this.status = status;
+		
 	}
 	
 	public abstract int executeAttack(int attackNum);
@@ -105,16 +106,41 @@ public abstract class Hero extends GameObject{
 	
 
 	public void update(int[][]map) {
-		//attackReceivePoint: quando 0 significa que não houve ataque recebido.
-		this.behavior();
-//		int[] chaos = map[1];
-		int movY = this.gravity.updateVector();
-		if(this.y + movY > 90) 	this.moveVertical(movY);
-		else					this.y = 90;
+		
+		if(this.status == "dying") {
+			this.dying();
+			
+		}else {
+			this.behavior();
+			
+			int movY = this.gravity.updateVector(this.x, this.y);
+
+			this.moveVertical(movY);
+			
+			//verificando se o heroi caiu em poco e morreu.
+			if(this.y < -50) {
+				this.statusChange("dying"); //Entra em morte
+			}
+			
+		}
+		
+		
 		this.setTexture(this.getTextureByState());
 	}
 
 	
+	private void dying() {
+		System.out.println(this.statusTime);
+		// processo de morte
+		if(this.statusTime-- < 0) {
+			System.out.println("dead");
+			this.statusChange("dead");
+			
+		}
+		this.moveVertical(5); //fantasmo subindo aos poucos
+		
+	}
+
 	public int getHitPoint() {
 		return this.hitPoint;
 	}
@@ -136,6 +162,10 @@ public abstract class Hero extends GameObject{
 	public int getStamina() {
 		return stamina;
 	}
+	
+	public String getStatus(){
+		return status;
+	}
 
 	/**
 	 * Retorna se é possivel gastar stamina, returna false avisando que não é possivel gastar.
@@ -145,7 +175,7 @@ public abstract class Hero extends GameObject{
 	public boolean spendStamina(int quant) {
 		if(this.stamina > quant) {
 			this.stamina -= quant;
-			System.out.println(this.stamina);
+//			System.out.println(this.stamina);
 			return true;
 		}
 		return false;

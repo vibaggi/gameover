@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 
-public class SwordHero extends Hero{
+public class SheHero extends Hero{
 	
 	static int hpSH = 100;
 	static int staminaSH = 1000;
@@ -13,8 +13,8 @@ public class SwordHero extends Hero{
 	public Music music;
 	
 
-	public SwordHero(float worldGravity, int[][] worldMap) {
-		super(new Texture("swordHero/heroAwaitingR.png"), hpSH, hitPointSH, staminaSH, defensePoint, worldGravity, 80, 80, worldMap);
+	public SheHero(float worldGravity, int[][] worldMap) {
+		super(new Texture("sheHero/heroAwaitingR.png"), hpSH, hitPointSH, staminaSH, defensePoint, worldGravity, 80, 80, worldMap);
 		// TODO Auto-generated constructor stub
 		music = Gdx.audio.newMusic(Gdx.files.internal("sounds/shot.mp3"));
 	}
@@ -51,37 +51,37 @@ public class SwordHero extends Hero{
 	public Texture getTextureByState() {
 		Texture tx;
 		if(this.status == "attacking") {
-			if(this.rightOrientation) 	tx = new Texture("swordHero/heroAttackingR.png");
-			else 						tx = new Texture("swordHero/heroAttackingL.png");
+			if(this.rightOrientation) 	tx = new Texture("sheHero/heroAttackingR.png");
+			else 						tx = new Texture("sheHero/heroAttackingL.png");
 		}
 		else if(this.status == "defensing") {
-			if(this.rightOrientation) 	tx = new Texture("swordHero/defenseR.png");
-			else 						tx = new Texture("swordHero/defenseL.png");
+			if(this.rightOrientation) 	tx = new Texture("sheHero/defenseR.png");
+			else 						tx = new Texture("sheHero/defenseL.png");
 		}
 		
 		else if(this.status == "jumping") {
-			if(this.rightOrientation) 	tx = new Texture("swordHero/jumpingR.png");
-			else 						tx = new Texture("swordHero/jumpingL.png");
+			if(this.rightOrientation) 	tx = new Texture("sheHero/jumpingR.png");
+			else 						tx = new Texture("sheHero/jumpingL.png");
 		}
 		
 		else if(this.status == "dying") {
-			if(this.rightOrientation) 	tx = new Texture("swordHero/deathR.png");
-			else 						tx = new Texture("swordHero/deathL.png");
+			if(this.rightOrientation) 	tx = new Texture("sheHero/deathR.png");
+			else 						tx = new Texture("sheHero/deathL.png");
 		}
 		
 		else if(this.status == "walking") {
 			if(this.rightOrientation) {
-				if(this.xPos%100 > 50)  tx = new Texture("swordHero/herowalk1R.png");
-				else					tx = new Texture("swordHero/herowalk2R.png");
+				if(this.xPos%100 > 50)  tx = new Texture("sheHero/herowalk1R.png");
+				else					tx = new Texture("sheHero/herowalk2R.png");
 			}
 			else {
-				if(this.xPos%100 > 50)  tx = new Texture("swordHero/herowalk1L.png");
-				else					tx = new Texture("swordHero/herowalk2L.png");
+				if(this.xPos%100 > 50)  tx = new Texture("sheHero/herowalk1L.png");
+				else					tx = new Texture("sheHero/herowalk2L.png");
 			}
 		}
 		else {
-			if(this.rightOrientation) 	tx = new Texture("swordHero/heroAwaitingR.png");
-			else 						tx = new Texture("swordHero/heroAwaitingL.png");
+			if(this.rightOrientation) 	tx = new Texture("sheHero/heroAwaitingR.png");
+			else 						tx = new Texture("sheHero/heroAwaitingL.png");
 		}
 		
 		return tx;
