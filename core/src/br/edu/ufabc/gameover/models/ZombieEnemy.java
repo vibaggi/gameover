@@ -20,8 +20,8 @@ public class ZombieEnemy extends AggressiveEnemy{
 	
 	public ZombieEnemy(int xPosInitial, int yPosInitial, GameAction game) {
 		super(new Texture("zombie/sprite1L.png"), 1, "Zumbi", xPosInitial, yPosInitial, 80, 80, 1, 1);
-		getHitSound = Gdx.audio.newMusic(Gdx.files.internal("sounds/tree/getHit.mp3"));
-		walkingSound = Gdx.audio.newMusic(Gdx.files.internal("sounds/tree/walking.mp3"));
+		getHitSound = Gdx.audio.newMusic(Gdx.files.internal("sounds/zombie/getHit.mp3"));
+		walkingSound = Gdx.audio.newMusic(Gdx.files.internal("sounds/zombie/walking.mp3"));
 		this.game = game; //Usado para inserir uma zona de ataque no game action
 	}
 

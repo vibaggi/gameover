@@ -43,11 +43,10 @@ public class Render {
 			e.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
 		}
 		
-//		for (AggressiveEnemy a: gameAction.agEnemies) {
-//			a.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
-//		}
+		gameAction.boss.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
 		//Heroi é renderizado
 		gameAction.hero.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
+		
 		
 		//Todos os projeteis são renderizados
 		for(ProjetilAttack zone: gameAction.projetilZones) {

@@ -12,6 +12,7 @@ import br.edu.ufabc.gameover.models.CloudObject;
 import br.edu.ufabc.gameover.models.CogsEnemy;
 import br.edu.ufabc.gameover.models.Enemy;
 import br.edu.ufabc.gameover.models.GameObject;
+import br.edu.ufabc.gameover.models.GrandTreeBossEnemy;
 import br.edu.ufabc.gameover.models.Hero;
 import br.edu.ufabc.gameover.models.PassiveEnemy;
 import br.edu.ufabc.gameover.models.ScenarioObject;
@@ -32,7 +33,7 @@ public class GameAction {
 	protected Array<Enemy> enemies;
 	protected Array<PhysicAttack> attackZones;
 	protected Array<ProjetilAttack> projetilZones;
-//	protected Array<AggressiveEnemy> agEnemies;
+	protected GrandTreeBossEnemy boss;
 	
 	protected SpriteBatch sprite;
 
@@ -47,11 +48,10 @@ public class GameAction {
 
 	public GameAction() {
 
-		//
 
 		objects = new Array<ScenarioObject>(); // iniciando arrays de objetos na tela
 		enemies = new Array<Enemy>();
-//		agEnemies = new Array<AggressiveEnemy>();
+
 		attackZones = new Array<PhysicAttack>();
 		projetilZones = new Array<ProjetilAttack>();
 		bg = new BgWorld1(); // iniciando plano de fundo
@@ -61,21 +61,17 @@ public class GameAction {
 
 		// geracao de inimigos
 		int y = 90;
-//		for (int i = 0; i < 5; i++) {
-//			enemies.add(new TreeEnemy((int) (Math.random() * 1200) + 100, y, this));
-//		}
-		for (int i = 0; i < 5; i++) {
-			enemies.add(new ZombieEnemy((int) (Math.random() * 1200) + 100, y, this));
-		}
 
 		for (int i = 0; i < 5; i++) {
-			enemies.add(new CogsEnemy((int) (Math.random() * 1200) + 1000, y, this));
+			enemies.add(new ZombieEnemy((int) (Math.random() * 1200) + 1000, y, this));
 		}
+
 
 		sprite = new SpriteBatch();
 		hero = new SwordHero(bg.getWorldGravity(), bg.getWorldMap());
 //		hero = new SheHero(bg.getWorldGravity(), bg.getWorldMap());
 
+		boss = new GrandTreeBossEnemy(6200, 90, this);
 		record = 0;
 	}
 
@@ -113,11 +109,7 @@ public class GameAction {
 			if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
 				this.hero.jump();
 			}
-//			if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-//				
-			//
-//			}
-//			
+
 			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 				int damage = this.hero.executeAttack(1);
 				if (damage > 0) { // se o ataque for zero, quer dizer que não pode ser realizado.
@@ -136,8 +128,11 @@ public class GameAction {
 				// Criar zona de ataque para verificar se algum inimigo foi atingido
 			}
 
+			
 			// fazendo update dos objetos
 			bg.update();
+			boss.update(hero.getXpos(), hero.getYpos(), groundCoordenates);
+			
 			for (ScenarioObject o : objects) {
 				o.update();
 			}
@@ -157,6 +152,12 @@ public class GameAction {
 						hitAnyone = true;
 						this.record += atk.getDamage();
 					}
+				}
+				
+				if(atk.isObjReceiveAtk(boss)) {
+					if(boss.receiveDamage(atk.getDamage())) System.out.println("Venceu o jogo!");
+					hitAnyone = true;
+					this.record += atk.getDamage();
 				}
 				
 				//verificando se algum dano inimigo atingiu o Hero
@@ -182,12 +183,26 @@ public class GameAction {
 					// verificar se obj sofreu ataque
 					if (atk.isObjReceiveAtk(o)) {
 						System.out.println("Dano recebido!");
-						if (o.receiveDamage(atk.getDamage()))
+						if (o.receiveDamage(atk.getDamage())) 
 							enemies.removeValue(o, true);
 						hitAnyone = true;
 						this.record += atk.getDamage();
 					}
 				}
+				
+				//verificando se algum dano inimigo atingiu o Hero
+				if(atk.isObjReceiveAtk(hero)) {
+					//if (hero.receiveDamage(atk.getDamage())) dead();
+					hero.receivedDamage(atk.getDamage());
+					hitAnyone = true;
+				}
+				
+				if(atk.isObjReceiveAtk(boss)) {
+					if (boss.receiveDamage(atk.getDamage())) System.out.println("Venceu o jogo!");
+					hitAnyone = true;
+					this.record += atk.getDamage();
+				}
+				
 
 				// por fim verifica se o ataque acertou algum alvo ou acabou seu tempo. Em caso
 				// positivo será retirado da array.

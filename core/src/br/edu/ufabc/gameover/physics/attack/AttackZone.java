@@ -14,10 +14,10 @@ import br.edu.ufabc.gameover.models.PassiveEnemy;
 
 public abstract class AttackZone {
 	
-	private int x1;
-	private int x2;
-	private int y1;
-	private int y2;
+	protected int x1;
+	protected int x2;
+	protected int y1;
+	protected int y2;
 	private int damageZone;
 	private int duration;
 	private String creator;
@@ -91,6 +91,10 @@ public abstract class AttackZone {
 
 	public String getCreator() {
 		return creator;
+	}
+	
+	public int getDuration() {
+		return duration;
 	}
 
 	

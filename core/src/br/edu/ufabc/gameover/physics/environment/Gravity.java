@@ -28,7 +28,7 @@ public class Gravity {
 		for (int i = 0; i < ground.length; i++) {
 //			System.out.println(ground[i][0]+" "+yPos+" "+verticalVector);
 			if(verticalVector <= 0 && (ground[i][0] <= yPos) && (ground[i][0] >= (yPos + verticalVector)) && (xPos > ground[i][1] && xPos < ground[i][2]) ) {
-				System.out.println(ground[i][0]-yPos);
+//				System.out.println(ground[i][0]-yPos);
 				verticalVector = 0; //Encotrou o chão. O vetor gravidade é anulado.
 				return (ground[i][0]-yPos);
 			}

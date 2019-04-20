@@ -6,7 +6,7 @@ abstract public class AggressiveEnemy extends Enemy{
 
 	AggressiveEnemy(Texture texture, int hitPoint, String name, int xPosInitial, int yPosInitial, int width, int height,
 			int velWalk, int velPursue) {
-		super(texture, hitPoint, name, xPosInitial, yPosInitial, width, height, velWalk, velPursue);
+		super(texture, hitPoint, name, xPosInitial, yPosInitial, width, height, velWalk, velPursue, 100);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -16,5 +16,8 @@ public abstract class ProjetilAttack extends AttackZone{
 		sprite.draw(tx, this.getX1()+xGeneralCoordenate, this.getY1());
 	}
 	
+	public void setTexture(Texture tx) {
+		this.tx = tx;
+	}
 
 }

@@ -32,7 +32,7 @@ abstract public class Enemy extends GameObject{
 	
 	
 	
-	Enemy(Texture texture, int hitPoint, String name, int xPosInitial, int yPosInitial, int width, int height, int velWalk, int velPursue) {
+	Enemy(Texture texture, int hitPoint, String name, int xPosInitial, int yPosInitial, int width, int height, int velWalk, int velPursue, int MAXHP) {
 		super(texture, width, height);
 		this.x = xPosInitial;
 		this.y = yPosInitial;
@@ -43,7 +43,7 @@ abstract public class Enemy extends GameObject{
 		this.setPosition(x, y);
 		bitmapFont = new BitmapFont(Gdx.files.internal("fonts/monstersInterface.fnt"));
 		hpTotal = 100;
-		hp = 100;
+		hp = MAXHP;
 	}
 	
 	public void update(int heroXpos, int heroYpos, int[][]map) {

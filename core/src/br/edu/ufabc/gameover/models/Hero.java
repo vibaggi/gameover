@@ -36,7 +36,6 @@ public abstract class Hero extends GameObject{
 	}
 	
 	public void jump() {
-//		System.out.println(4);
 		this.gravity.jump(15);
 	}
 
@@ -130,10 +129,8 @@ public abstract class Hero extends GameObject{
 
 	
 	private void dying() {
-		System.out.println(this.statusTime);
 		// processo de morte
 		if(this.statusTime-- < 0) {
-			System.out.println("dead");
 			this.statusChange("dead");
 			
 		}
