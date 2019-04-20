@@ -56,7 +56,7 @@ public class GameAction {
 		// geracao de inimigos
 		int y = 90;
 		for (int i = 0; i < 5; i++) {
-			enemies.add(new TreeEnemy((int) (Math.random() * 1200) + 100, y));
+			enemies.add(new TreeEnemy((int) (Math.random() * 1200) + 100, y, this));
 		}
 
 		for (int i = 0; i < 5; i++) {
@@ -64,8 +64,8 @@ public class GameAction {
 		}
 
 		sprite = new SpriteBatch();
-//		hero = new SwordHero(bg.getWorldGravity(), bg.getWorldMap());
-		hero = new SheHero(bg.getWorldGravity(), bg.getWorldMap());
+		hero = new SwordHero(bg.getWorldGravity(), bg.getWorldMap());
+//		hero = new SheHero(bg.getWorldGravity(), bg.getWorldMap());
 
 		record = 0;
 	}
@@ -142,12 +142,19 @@ public class GameAction {
 				for (PassiveEnemy o : enemies) {
 					// verificar se obj sofreu ataque
 					if (atk.isObjReceiveAtk(o)) {
-						System.out.println("Dano recebido!");
+						
 						if (o.receiveDamage(atk.getDamage()))
 							enemies.removeValue(o, true);
 						hitAnyone = true;
 						this.record += atk.getDamage();
 					}
+				}
+				
+				//verificando se algum dano inimigo atingiu o Hero
+				if(atk.isObjReceiveAtk(hero)) {
+					//if (hero.receiveDamage(atk.getDamage())) dead();
+					hero.receivedDamage(atk.getDamage());
+					hitAnyone = true;
 				}
 
 				// por fim verifica se o ataque acertou algum alvo ou acabou seu tempo. Em caso

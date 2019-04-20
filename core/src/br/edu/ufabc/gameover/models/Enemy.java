@@ -41,7 +41,7 @@ abstract public class Enemy extends GameObject{
 		this.velWalkingAway = velWalk;
 		this.velPursue		= velPursue;
 		this.setPosition(x, y);
-		bitmapFont = new BitmapFont(Gdx.files.internal("fonts/myfont.fnt"));
+		bitmapFont = new BitmapFont(Gdx.files.internal("fonts/monstersInterface.fnt"));
 		hpTotal = 100;
 		hp = 100;
 	}
@@ -76,7 +76,7 @@ abstract public class Enemy extends GameObject{
 	//Adicionado barra de HP ao inimigo
 	public void draw(SpriteBatch batch, int xGeneralCoordenate) {
 		bitmapFont.draw(batch, String.valueOf(hp)+"/"+String.valueOf(hpTotal), this.getXpos()+xGeneralCoordenate, this.getYpos());
-		bitmapFont.draw(batch, name, this.getXpos()+xGeneralCoordenate, this.getYpos()-50);
+		bitmapFont.draw(batch, name, this.getXpos()+xGeneralCoordenate, this.getYpos()-30);
 		super.draw(batch, xGeneralCoordenate);
 	}
 	

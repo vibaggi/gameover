@@ -18,7 +18,7 @@ public class Render {
 	public Render(GameAction action) {
 		// TODO Auto-generated constructor stub
 		this.gameAction = action;
-		bitmapFont = new BitmapFont(Gdx.files.internal("fonts/myfont.fnt"));
+		bitmapFont = new BitmapFont(Gdx.files.internal("fonts/interface.fnt"));
 		viewMatrix = new Matrix4();
 	}
 	
@@ -49,8 +49,10 @@ public class Render {
 		}
 		
 		//Atualizando interface
-		bitmapFont.draw(gameAction.sprite, "Pontuacao: "+gameAction.record, 350, 460);
-		bitmapFont.draw(gameAction.sprite, "Stamina: "+gameAction.hero.getStamina(), 0, 460);
+		bitmapFont.draw(gameAction.sprite, "Pontuacao: "+gameAction.record, 400, 580); //exibir pontuacao
+		
+		bitmapFont.draw(gameAction.sprite, "Stamina: "+gameAction.hero.getStamina(), 50, 580); //exibir HP
+		bitmapFont.draw(gameAction.sprite, "HP: "+gameAction.hero.getHP(), 50, 540); //exibir Stamina
 		
 		gameAction.sprite.end();
 		

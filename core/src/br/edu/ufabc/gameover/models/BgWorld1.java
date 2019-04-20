@@ -1,5 +1,7 @@
 package br.edu.ufabc.gameover.models;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 
 public class BgWorld1 extends ScenarioObject{
@@ -7,6 +9,7 @@ public class BgWorld1 extends ScenarioObject{
 	//variaveis auxiliares do background
 	int xGeneralCoordenate;
 	float worldGravity;
+	public Music music;
 	
 	private int [][] groundCoordenates; //sistema de chao, respectivamente significa altura, posicao inicial e posicao final do chao
 	
@@ -22,6 +25,10 @@ public class BgWorld1 extends ScenarioObject{
 			{90, 0, 2280}, //ex: na altura 90 há chão do px 0 ao 100
 
 		};
+		
+		music = Gdx.audio.newMusic(Gdx.files.internal("sounds/scenario1/ambientation.mp3"));
+		music.setLooping(true);
+		music.play();
 		
 	}
 

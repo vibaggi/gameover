@@ -1,15 +1,22 @@
 package br.edu.ufabc.gameover.models;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 
 public class CogsEnemy extends PassiveEnemy {
 
 	private int frameState = 1;	//Variavel usada para exibir animacao de textura se o estado tiver. Exemplo: animação ao andar.
-	
+	//Sounds
+	public Music getHitSound; //som ao receber um ataque
+	public Music walkingSound; //som ao andar
 
 	public CogsEnemy(int xPosInitial, int yPosInitial) {
 		super(new Texture("cogumelus/sprite1R.png"), 1, "Cogumelus", xPosInitial, yPosInitial, 100, 100, 1, 2);
-		// TODO Auto-generated constructor stub
+		
+		//definindo sons
+//		getHitSound = Gdx.audio.newMusic(Gdx.files.internal("sounds/cogs/getHit.mp3"));
+//		walkingSound = Gdx.audio.newMusic(Gdx.files.internal("sounds/cogs/walking.mp3"));
 	}
 
 	@Override
