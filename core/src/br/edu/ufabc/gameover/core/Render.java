@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Matrix4;
 
+import br.edu.ufabc.gameover.models.AggressiveEnemy;
+import br.edu.ufabc.gameover.models.Enemy;
 import br.edu.ufabc.gameover.models.GameObject;
 import br.edu.ufabc.gameover.models.PassiveEnemy;
 import br.edu.ufabc.gameover.physics.attack.ProjetilAttack;
@@ -37,9 +39,13 @@ public class Render {
 			o.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
 		}
 		//Seguido de todos os inimigos
-		for (PassiveEnemy e: gameAction.enemies) {
+		for (Enemy e: gameAction.enemies) {
 			e.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
 		}
+		
+//		for (AggressiveEnemy a: gameAction.agEnemies) {
+//			a.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
+//		}
 		//Heroi é renderizado
 		gameAction.hero.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
 		

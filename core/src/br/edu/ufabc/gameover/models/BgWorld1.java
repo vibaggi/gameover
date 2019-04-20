@@ -23,7 +23,11 @@ public class BgWorld1 extends ScenarioObject{
 		groundCoordenates = new int[][]{
 			{200, 250, 400},
 			{90, 0, 2280}, //ex: na altura 90 há chão do px 0 ao 100
-
+			{90, 2600, 5000},
+			{200, 2280, 2450},
+			{310, 2450, 2600}, 
+			{310, 450, 650},
+			{310, 750, 1250},
 		};
 		
 		music = Gdx.audio.newMusic(Gdx.files.internal("sounds/scenario1/ambientation.mp3"));

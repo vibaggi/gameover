@@ -53,9 +53,12 @@ abstract public class Enemy extends GameObject{
 		this.targetY = heroYpos;
 		
 		//executando comportamento
-		this.behavior();
-		this.setPosition(this.x, this.y);
-		this.setTexture(this.getTextureByState());
+		if(this.isVisibleInScreen()) {
+			this.behavior();
+			this.setPosition(this.x, this.y);
+			this.setTexture(this.getTextureByState());
+		}
+	
 	}
 	
 
@@ -103,6 +106,16 @@ abstract public class Enemy extends GameObject{
 	
 	protected boolean getClosedToHero() {
 		return this.closedToHero;
+	}
+	
+	/**
+	 * Verifica se o monstro  está dentro da visão de tela.
+	 * Pode ser usado para manter o monstro inativo enquanto fora de visão do usuario.
+	 * @return
+	 */
+	public boolean isVisibleInScreen() {
+		int deltaXToHero = this.x - this.targetX;
+		return deltaXToHero < 700 && deltaXToHero > -300;
 	}
 	
 

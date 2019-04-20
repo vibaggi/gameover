@@ -6,9 +6,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.Array;
 
+import br.edu.ufabc.gameover.models.AggressiveEnemy;
 import br.edu.ufabc.gameover.models.BgWorld1;
 import br.edu.ufabc.gameover.models.CloudObject;
 import br.edu.ufabc.gameover.models.CogsEnemy;
+import br.edu.ufabc.gameover.models.Enemy;
 import br.edu.ufabc.gameover.models.GameObject;
 import br.edu.ufabc.gameover.models.Hero;
 import br.edu.ufabc.gameover.models.PassiveEnemy;
@@ -16,6 +18,7 @@ import br.edu.ufabc.gameover.models.ScenarioObject;
 import br.edu.ufabc.gameover.models.SheHero;
 import br.edu.ufabc.gameover.models.SwordHero;
 import br.edu.ufabc.gameover.models.TreeEnemy;
+import br.edu.ufabc.gameover.models.ZombieEnemy;
 import br.edu.ufabc.gameover.physics.attack.AttackZone;
 import br.edu.ufabc.gameover.physics.attack.ExplosionBladesAttack;
 import br.edu.ufabc.gameover.physics.attack.PhysicAttack;
@@ -26,10 +29,11 @@ public class GameAction {
 	protected Hero hero;
 	protected BgWorld1 bg;
 	protected Array<ScenarioObject> objects;
-	protected Array<PassiveEnemy> enemies;
+	protected Array<Enemy> enemies;
 	protected Array<PhysicAttack> attackZones;
 	protected Array<ProjetilAttack> projetilZones;
-
+//	protected Array<AggressiveEnemy> agEnemies;
+	
 	protected SpriteBatch sprite;
 
 	// Sistemas de orientação
@@ -39,13 +43,15 @@ public class GameAction {
 
 	// Interface
 	int record; // sistema de pontos
+										
 
 	public GameAction() {
 
 		//
 
 		objects = new Array<ScenarioObject>(); // iniciando arrays de objetos na tela
-		enemies = new Array<PassiveEnemy>();
+		enemies = new Array<Enemy>();
+//		agEnemies = new Array<AggressiveEnemy>();
 		attackZones = new Array<PhysicAttack>();
 		projetilZones = new Array<ProjetilAttack>();
 		bg = new BgWorld1(); // iniciando plano de fundo
@@ -55,12 +61,15 @@ public class GameAction {
 
 		// geracao de inimigos
 		int y = 90;
+//		for (int i = 0; i < 5; i++) {
+//			enemies.add(new TreeEnemy((int) (Math.random() * 1200) + 100, y, this));
+//		}
 		for (int i = 0; i < 5; i++) {
-			enemies.add(new TreeEnemy((int) (Math.random() * 1200) + 100, y, this));
+			enemies.add(new ZombieEnemy((int) (Math.random() * 1200) + 100, y, this));
 		}
 
 		for (int i = 0; i < 5; i++) {
-			enemies.add(new CogsEnemy((int) (Math.random() * 1200) + 1000, y));
+			enemies.add(new CogsEnemy((int) (Math.random() * 1200) + 1000, y, this));
 		}
 
 		sprite = new SpriteBatch();
@@ -132,14 +141,14 @@ public class GameAction {
 			for (ScenarioObject o : objects) {
 				o.update();
 			}
-			for (PassiveEnemy e : enemies) {
+			for (Enemy e : enemies) {
 				e.update(this.hero.getXpos(), this.hero.getYpos(), groundCoordenates);
 			}
 
 			// verificando se alguma zona de ataque acerta algum objeto.
 			for (PhysicAttack atk : attackZones) {
 				boolean hitAnyone = false;
-				for (PassiveEnemy o : enemies) {
+				for (Enemy o : enemies) {
 					// verificar se obj sofreu ataque
 					if (atk.isObjReceiveAtk(o)) {
 						
@@ -169,7 +178,7 @@ public class GameAction {
 			// verificando projeteis
 			for (ProjetilAttack atk : projetilZones) {
 				boolean hitAnyone = false;
-				for (PassiveEnemy o : enemies) {
+				for (Enemy o : enemies) {
 					// verificar se obj sofreu ataque
 					if (atk.isObjReceiveAtk(o)) {
 						System.out.println("Dano recebido!");
