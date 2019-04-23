@@ -48,9 +48,10 @@ import br.edu.ufabc.gameover.physics.attack.RootsBossAttack;
 	
 	
 	private void searchHero() {
-		int deltaXToHero = this.getXpos() -this.targetX;
+		int deltaXToHero = Math.abs((this.getXpos()+(this.width/2)) -this.targetX);
+		System.out.println(deltaXToHero);
 		if( (this.getYpos() <= this.targetY && this.getY2pos() >= this.targetY) 
-				&& ( deltaXToHero < 300 || deltaXToHero > -200 )) {
+				&& ( deltaXToHero < 300)) {
 			this.detectedHero = true;
 		}
 		
@@ -90,7 +91,7 @@ import br.edu.ufabc.gameover.physics.attack.RootsBossAttack;
 			getHitSound.play(); //Som ao receber um ataque
 			if(rightOrientation) 	tx = new Texture("grandTree/grandTreeGetHitR.png");
 			else					tx = new Texture("grandTree/grandTreeGetHitL.png");
-		}else if(status == "attacking"){
+		}else if(status == "attacking" && this.statusTime > 20){
 			if(rightOrientation) 	tx = new Texture("grandTree/grandTreeAttackingR.png");
 			else					tx = new Texture("grandTree/grandTreeAttackingL.png");
 			

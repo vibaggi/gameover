@@ -92,6 +92,7 @@ public abstract class Hero extends GameObject{
 	
 	public void receivedDamage(int hit) {
 		this.hitPointReceived = hit;
+		this.statusChange("takingHit");
 	}
 	
 	public void statusChange(String status) {

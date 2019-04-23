@@ -44,7 +44,7 @@ public class Gravity {
 	 * @param verticalVector velocidade do salto inicial
 	 */
 	public void jump(int verticalVector) {
-		this.verticalVector = verticalVector;
+		if(this.verticalVector == 0)this.verticalVector = verticalVector;
 	}
 	
 }

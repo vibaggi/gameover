@@ -1,6 +1,7 @@
 package br.edu.ufabc.gameover.core;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Matrix4;
 
@@ -53,13 +54,29 @@ public class Render {
 			zone.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
 		}
 		
+		this.refreshInterface();
+		
+		gameAction.sprite.end();
+		
+		
+	}
+	
+	/**
+	 * Atualiza a interface, incluindo HP, stamina e icones
+	 * @param sprite
+	 */
+	private void refreshInterface() {
 		//Atualizando interface
 		bitmapFont.draw(gameAction.sprite, "Pontuacao: "+gameAction.record, 400, 580); //exibir pontuacao
 		
 		bitmapFont.draw(gameAction.sprite, "Stamina: "+gameAction.hero.getStamina(), 50, 580); //exibir HP
 		bitmapFont.draw(gameAction.sprite, "HP: "+gameAction.hero.getHP(), 50, 540); //exibir Stamina
 		
-		gameAction.sprite.end();
+		
+		gameAction.sprite.draw(new Texture("icons/potionS.png"), 610, 10);
+		gameAction.sprite.draw(new Texture("icons/potionHP.png"), 540, 10);
+		gameAction.sprite.draw(new Texture("icons/magic.png"), 470, 10);
+		gameAction.sprite.draw(new Texture("icons/attack.png"), 400, 10);
 		
 		
 	}

@@ -115,7 +115,7 @@ abstract public class Enemy extends GameObject{
 	 */
 	public boolean isVisibleInScreen() {
 		int deltaXToHero = this.x - this.targetX;
-		return deltaXToHero < 700 && deltaXToHero > -300;
+		return deltaXToHero < 700 && deltaXToHero > -600;
 	}
 	
 

@@ -36,6 +36,9 @@ public class GameAction {
 	protected GrandTreeBossEnemy boss;
 	
 	protected SpriteBatch sprite;
+	
+	int totalPotionHP;
+	int totalPotionS;
 
 	// Sistemas de orientação
 	private int xGeneralCoordenate = 0; // posicao da tela
@@ -71,8 +74,11 @@ public class GameAction {
 		hero = new SwordHero(bg.getWorldGravity(), bg.getWorldMap());
 //		hero = new SheHero(bg.getWorldGravity(), bg.getWorldMap());
 
-		boss = new GrandTreeBossEnemy(6200, 90, this);
+		boss = new GrandTreeBossEnemy(800, 90, this);
 		record = 0;
+		
+		totalPotionHP = 5;
+		totalPotionS = 5;
 	}
 
 	public void update(float delta) {
@@ -89,11 +95,14 @@ public class GameAction {
 			//Caso esteja vivo executa normalmente
 			
 			
-			if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-				this.hero.moveHorizontal(-5);
-				xGeneralCoordenate -= 5;
+			if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+				if(xGeneralCoordenate > - 6300) {
+					this.hero.moveHorizontal(-5);
+					xGeneralCoordenate -= 5;
+				}
+				
 			}
-			if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+			if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 
 				if (xGeneralCoordenate < -5) {
 					xGeneralCoordenate += 5;
@@ -101,16 +110,16 @@ public class GameAction {
 				}
 			}
 
-			if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+			if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
 
 				this.hero.statusChange("defensing");
 			}
 
-			if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+			if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
 				this.hero.jump();
 			}
 
-			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+			if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) {
 				int damage = this.hero.executeAttack(1);
 				if (damage > 0) { // se o ataque for zero, quer dizer que não pode ser realizado.
 					PhysicAttack atk = new PhysicAttack(this.hero, damage, 50, "hero");
@@ -127,6 +136,15 @@ public class GameAction {
 				}
 				// Criar zona de ataque para verificar se algum inimigo foi atingido
 			}
+			
+			if (Gdx.input.isKeyJustPressed(Input.Keys.C)) {
+				//USAR POÇÃO HP
+			}
+			
+			if (Gdx.input.isKeyJustPressed(Input.Keys.V)) {
+				//USAR POÇÃO STAMINA
+			}
+			
 
 			
 			// fazendo update dos objetos

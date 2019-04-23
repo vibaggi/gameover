@@ -69,6 +69,11 @@ public class SwordHero extends Hero{
 			else 						tx = new Texture("swordHero/deathL.png");
 		}
 		
+		else if(this.status == "takingHit") {
+			if(this.rightOrientation) 	tx = new Texture("swordHero/getHitR.png");
+			else 						tx = new Texture("swordHero/getHitL.png");
+		}
+		
 		else if(this.status == "walking") {
 			if(this.rightOrientation) {
 				if(this.xPos%100 > 50)  tx = new Texture("swordHero/herowalk1R.png");
