@@ -107,20 +107,29 @@ public abstract class Hero extends GameObject{
 
 	public void update(int[][]map) {
 		
+		
 		if(this.status == "dying") {
 			this.dying();
 			
 		}else {
-			this.behavior();
 			
-			int movY = this.gravity.updateVector(this.x, this.y);
+			if(this.HP <= 0) {
+				this.statusChange("dying");
+			}else {
+				
+				this.behavior();
+				
+				int movY = this.gravity.updateVector(this.x, this.y);
 
-			this.moveVertical(movY);
-			
-			//verificando se o heroi caiu em poco e morreu.
-			if(this.y < -50) {
-				this.statusChange("dying"); //Entra em morte
+				this.moveVertical(movY);
+				
+				//verificando se o heroi caiu em poco e morreu.
+				if(this.y < -50) {
+					this.statusChange("dying"); //Entra em morte
+				}
+				
 			}
+			
 			
 		}
 		
@@ -177,5 +186,20 @@ public abstract class Hero extends GameObject{
 			return true;
 		}
 		return false;
+	}
+	
+	public void reset() {
+		this.HP = this.maxHP;
+		this.stamina = this.maxStamina;
+		this.x = 200;
+		this.y = 90;
+	}
+	
+	public void restoreHP(int quant) {
+		this.HP += quant;
+	}
+	
+	public void restoreStamina(int quant) {
+		this.stamina += quant;
 	}
 }

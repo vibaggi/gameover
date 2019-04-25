@@ -2,6 +2,8 @@ package br.edu.ufabc.gameover.core;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.Array;
@@ -39,6 +41,8 @@ public class GameAction {
 	
 	int totalPotionHP;
 	int totalPotionS;
+	int totalLife;
+	boolean objectiveComplete = false; //Ao eliminar o boss o objetivo fica true e o jogo pode ser finalizado!
 
 	// Sistemas de orientação
 	private int xGeneralCoordenate = 0; // posicao da tela
@@ -47,7 +51,8 @@ public class GameAction {
 
 	// Interface
 	int record; // sistema de pontos
-										
+	private Music restartSound;
+	private Music potionSound;
 
 	public GameAction() {
 
@@ -66,7 +71,9 @@ public class GameAction {
 		int y = 90;
 
 		for (int i = 0; i < 5; i++) {
-			enemies.add(new ZombieEnemy((int) (Math.random() * 1200) + 1000, y, this));
+			enemies.add(new ZombieEnemy((int) (Math.random() * 1200) + 3500, y, this));
+			enemies.add(new CogsEnemy((int) (Math.random() * 800) + 1400, y, this));
+			enemies.add(new TreeEnemy((int) (Math.random() * 800) + 600, y, this));
 		}
 
 
@@ -74,11 +81,15 @@ public class GameAction {
 		hero = new SwordHero(bg.getWorldGravity(), bg.getWorldMap());
 //		hero = new SheHero(bg.getWorldGravity(), bg.getWorldMap());
 
-		boss = new GrandTreeBossEnemy(800, 90, this);
+		boss = new GrandTreeBossEnemy(5600, 90, this);
 		record = 0;
 		
 		totalPotionHP = 5;
 		totalPotionS = 5;
+		totalLife	= 3; //comeca com 3 vidas. Quando chegar em 0 é game over.
+		
+		restartSound = Gdx.audio.newMusic(Gdx.files.internal("sounds/comeBackWhenDie.mp3"));
+		potionSound = Gdx.audio.newMusic(Gdx.files.internal("sounds/potion.mp3"));
 	}
 
 	public void update(float delta) {
@@ -86,6 +97,8 @@ public class GameAction {
 		//Se o heroi morreu é necessário resetar o jogo
 		if (this.hero.getStatus() == "dead") {
 			
+			if(--totalLife < 0) 	this.gameOver();
+			else				this.restart();
 			
 		}else if (this.hero.getStatus() == "dying") {
 			hero.update(bg.getWorldMap());
@@ -139,16 +152,24 @@ public class GameAction {
 			
 			if (Gdx.input.isKeyJustPressed(Input.Keys.C)) {
 				//USAR POÇÃO HP
+				potionSound.play();
+				hero.restoreHP(50);
+				totalPotionHP--;
 			}
 			
 			if (Gdx.input.isKeyJustPressed(Input.Keys.V)) {
 				//USAR POÇÃO STAMINA
+				potionSound.play();
+				hero.restoreStamina(500);
+				totalPotionS--;
 			}
 			
 
 			
 			// fazendo update dos objetos
 			bg.update();
+			
+			
 			boss.update(hero.getXpos(), hero.getYpos(), groundCoordenates);
 			
 			for (ScenarioObject o : objects) {
@@ -173,7 +194,10 @@ public class GameAction {
 				}
 				
 				if(atk.isObjReceiveAtk(boss)) {
-					if(boss.receiveDamage(atk.getDamage())) System.out.println("Venceu o jogo!");
+					if(boss.receiveDamage(atk.getDamage())) {
+						objectiveComplete = true;
+						boss.statusChange("dying");
+					}
 					hitAnyone = true;
 					this.record += atk.getDamage();
 				}
@@ -216,7 +240,11 @@ public class GameAction {
 				}
 				
 				if(atk.isObjReceiveAtk(boss)) {
-					if (boss.receiveDamage(atk.getDamage())) System.out.println("Venceu o jogo!");
+					if (boss.receiveDamage(atk.getDamage())){
+						objectiveComplete = true;
+						boss.statusChange("dying");
+						System.out.println("Deveria morrer");
+					}
 					hitAnyone = true;
 					this.record += atk.getDamage();
 				}
@@ -235,6 +263,20 @@ public class GameAction {
 
 		}
 
+	}
+
+	private void restart() {
+		// Envia de volta para o inicio da tela, porem mantem 
+		System.out.println("restart");
+		this.hero.statusChange("awaiting");
+		this.hero.reset();
+		this.xGeneralCoordenate = 0;
+		restartSound.play();
+	}
+
+	private void gameOver() {
+		// Envia de volta para a tela de inicio
+		
 	}
 
 	public int getXGeneralCoordenate() {

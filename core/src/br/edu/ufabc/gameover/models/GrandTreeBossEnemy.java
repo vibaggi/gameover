@@ -19,7 +19,7 @@ import br.edu.ufabc.gameover.physics.attack.RootsBossAttack;
 		
 		
 	public GrandTreeBossEnemy(int xPosInitial, int yPosInitial, GameAction game) {
-		super(new Texture("grandTree/grandTreeS1L.png"), 20, "Árvore Anciã", xPosInitial, yPosInitial, 600, 600, 0, 0, 1000);
+		super(new Texture("grandTree/grandTreeS1L.png"), 20, "Árvore Ancião", xPosInitial, yPosInitial, 600, 600, 0, 0, 500);
 		getHitSound = Gdx.audio.newMusic(Gdx.files.internal("sounds/tree/getHit.mp3"));
 		walkingSound = Gdx.audio.newMusic(Gdx.files.internal("sounds/tree/walking.mp3"));
 		this.game = game;
@@ -29,33 +29,39 @@ import br.edu.ufabc.gameover.physics.attack.RootsBossAttack;
 	@Override
 	public void behavior() {
 		
+		
 		//Comportamento parecido com o agressivo. Entretanto o boss sempre sabe onde está o heroi na tela.
+		if(this.status == "dying" && this.statusTime <= 0) {
+			this.statusChange("dead");
+		} else if(this.status != "dead" && this.status != "dying") {
+			
+			if(this.statusTime <= 0) this.statusChange("awaiting");
+			
+			if(this.status != "takingHit" && this.status != "attacking") { //Boss sofre delay ao ser atacado
+				
+				//GrandTree é um inimigo imovel
+				
+				
+				this.attack();
+				
+				
+			}
+		}
 		this.statusTime--;
-		if(this.statusTime <= 0) this.statusChange("awaiting");
-		
-		if(this.status != "takingHit" && this.status != "attacking") { //Boss sofre delay ao ser atacado
-			
-			//GrandTree é um inimigo imovel
-			
-			
-			this.attack();
-			
-			
-		}
-		
+
 		
 	}
 	
 	
-	private void searchHero() {
-		int deltaXToHero = Math.abs((this.getXpos()+(this.width/2)) -this.targetX);
-		System.out.println(deltaXToHero);
-		if( (this.getYpos() <= this.targetY && this.getY2pos() >= this.targetY) 
-				&& ( deltaXToHero < 300)) {
-			this.detectedHero = true;
-		}
-		
-	}
+//	private void searchHero() {
+//		int deltaXToHero = Math.abs((this.getXpos()+(this.width/2)) -this.targetX);
+//		System.out.println(deltaXToHero);
+//		if( (this.getYpos() <= this.targetY && this.getY2pos() >= this.targetY) 
+//				&& ( deltaXToHero < 300)) {
+//			this.detectedHero = true;
+//		}
+//		
+//	}
 
 	public void pursue(int targetX, int targetY) {
 		if( (targetX-this.getXpos()) > 50 ) {
@@ -83,29 +89,30 @@ import br.edu.ufabc.gameover.physics.attack.RootsBossAttack;
 	@Override
 	public Texture getTextureByState() {
 		
-		Texture tx = new Texture("tree/sprite1L.png"); //inicialização padrão
+		Texture tx = new Texture("grandTree/grandTreeS1L.png"); //inicialização padrão
 		
 		this.frameState++; //contador que auxilia a animação
 		
-		if(status == "takingHit") {
+		System.out.println(status);
+		if(status == "dead") {
+			tx = new Texture("grandTree/grandTreeDying6.png");
+		}else if(status == "dying") {
+			if(statusTime > 16) tx = new Texture("grandTree/grandTreeDying1.png");
+			else if(statusTime > 12) tx = new Texture("grandTree/grandTreeDying2.png");
+			else if(statusTime > 8) tx = new Texture("grandTree/grandTreeDying3.png");
+			else if(statusTime > 4) tx = new Texture("grandTree/grandTreeDying4.png");
+			else if(statusTime > 0) tx = new Texture("grandTree/grandTreeDying5.png");
+		}else if(status == "takingHit") {
 			getHitSound.play(); //Som ao receber um ataque
-			if(rightOrientation) 	tx = new Texture("grandTree/grandTreeGetHitR.png");
-			else					tx = new Texture("grandTree/grandTreeGetHitL.png");
-		}else if(status == "attacking" && this.statusTime > 20){
-			if(rightOrientation) 	tx = new Texture("grandTree/grandTreeAttackingR.png");
-			else					tx = new Texture("grandTree/grandTreeAttackingL.png");
-			
+			tx = new Texture("grandTree/grandTreeGetHitL.png");
+		}else if(status == "attacking" && this.statusTime < 140 && this.statusTime > 100){
+			tx = new Texture("grandTree/grandTreeAttackingL.png");
 		}else {
-			if(rightOrientation) {
-				tx = new Texture("grandTree/grandTreeS1R.png");
-			}else {
-				tx = new Texture("grandTree/grandTreeS1L.png");
-			}
+			tx = new Texture("grandTree/grandTreeS1L.png");
 		}
 		
 		return tx;
 	}
-	
 	
 
 

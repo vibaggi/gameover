@@ -89,15 +89,21 @@ abstract public class Enemy extends GameObject{
 	 * @return
 	 */
 	public boolean receiveDamage(int damage) {
-		this.statusChange("takingHit");
 		this.detectedHero = true;
 		this.hp -= damage;
-		return this.hp <= 0;
+		if( this.hp <= 0) return true;
+		if(status != "dead" && status != "dying") this.statusChange("takingHit");
+		return false;
 	}
 	
-	public void statusChange(String status) {
-		this.status = status;
-		this.statusTime = 20;
+	public void statusChange(String statusReceive) {
+		if(this.status != "dead" && this.status != "dying"){
+			this.status = statusReceive;
+			this.statusTime = 20;
+		}else if(statusReceive == "dead") {
+			//para o caso de estar passando de dying para dead
+			this.status = "dead";
+		}
 	}
 	
 	protected void setClosedToHero(boolean close) {

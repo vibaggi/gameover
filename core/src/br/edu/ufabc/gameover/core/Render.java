@@ -67,14 +67,24 @@ public class Render {
 	 */
 	private void refreshInterface() {
 		//Atualizando interface
-		bitmapFont.draw(gameAction.sprite, "Pontuacao: "+gameAction.record, 400, 580); //exibir pontuacao
 		
-		bitmapFont.draw(gameAction.sprite, "Stamina: "+gameAction.hero.getStamina(), 50, 580); //exibir HP
-		bitmapFont.draw(gameAction.sprite, "HP: "+gameAction.hero.getHP(), 50, 540); //exibir Stamina
+		//Mostrando corações
+		for(int i = 0; i < gameAction.totalLife; i ++) {
+			gameAction.sprite.draw(new Texture("icons/heart.png"), i*70 +50, 550);
+		}
+		
+		
+		bitmapFont.draw(gameAction.sprite, "Pontuacao: "+gameAction.record, 400, 540); //exibir pontuacao
+		
+		bitmapFont.draw(gameAction.sprite, "Stamina: "+gameAction.hero.getStamina(), 50, 540); //exibir HP
+		bitmapFont.draw(gameAction.sprite, "HP: "+gameAction.hero.getHP(), 50, 500); //exibir Stamina
 		
 		
 		gameAction.sprite.draw(new Texture("icons/potionS.png"), 610, 10);
+		bitmapFont.draw(gameAction.sprite, String.valueOf(gameAction.totalPotionS), 610, 25);
+		
 		gameAction.sprite.draw(new Texture("icons/potionHP.png"), 540, 10);
+		bitmapFont.draw(gameAction.sprite, String.valueOf(gameAction.totalPotionHP), 540, 25);
 		gameAction.sprite.draw(new Texture("icons/magic.png"), 470, 10);
 		gameAction.sprite.draw(new Texture("icons/attack.png"), 400, 10);
 		
