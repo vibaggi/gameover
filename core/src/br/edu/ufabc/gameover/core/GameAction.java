@@ -3,26 +3,20 @@ package br.edu.ufabc.gameover.core;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.Array;
 
-import br.edu.ufabc.gameover.models.AggressiveEnemy;
 import br.edu.ufabc.gameover.models.BgWorld1;
 import br.edu.ufabc.gameover.models.CloudObject;
 import br.edu.ufabc.gameover.models.CogsEnemy;
 import br.edu.ufabc.gameover.models.Enemy;
-import br.edu.ufabc.gameover.models.GameObject;
 import br.edu.ufabc.gameover.models.GrandTreeBossEnemy;
 import br.edu.ufabc.gameover.models.Hero;
-import br.edu.ufabc.gameover.models.PassiveEnemy;
+import br.edu.ufabc.gameover.models.Portal;
 import br.edu.ufabc.gameover.models.ScenarioObject;
-import br.edu.ufabc.gameover.models.SheHero;
 import br.edu.ufabc.gameover.models.SwordHero;
 import br.edu.ufabc.gameover.models.TreeEnemy;
 import br.edu.ufabc.gameover.models.ZombieEnemy;
-import br.edu.ufabc.gameover.physics.attack.AttackZone;
 import br.edu.ufabc.gameover.physics.attack.ExplosionBladesAttack;
 import br.edu.ufabc.gameover.physics.attack.PhysicAttack;
 import br.edu.ufabc.gameover.physics.attack.ProjetilAttack;
@@ -38,12 +32,14 @@ public class GameAction {
 	protected GrandTreeBossEnemy boss;
 	
 	protected SpriteBatch sprite;
+	protected Portal portal; //Portal que indica fim de jogo. Ele será aberto apos derrotar o chefe.
 	
 	int totalPotionHP;
 	int totalPotionS;
 	int totalLife;
-	boolean objectiveComplete = false; //Ao eliminar o boss o objetivo fica true e o jogo pode ser finalizado!
-
+	boolean objectiveComplete 	= false; //Ao eliminar o boss o objetivo fica true e o jogo pode ser finalizado!
+	boolean gameOver			= false; //Quando a flag trocar para true é pq o jogo terminou e precisa voltar para a tela de entrada
+	
 	// Sistemas de orientação
 	private int xGeneralCoordenate = 0; // posicao da tela
 	private int[][] groundCoordenates; // coordenadas de orientação de chão. Usada pelo sistema de gravidade para puxar
@@ -90,15 +86,20 @@ public class GameAction {
 		
 		restartSound = Gdx.audio.newMusic(Gdx.files.internal("sounds/comeBackWhenDie.mp3"));
 		potionSound = Gdx.audio.newMusic(Gdx.files.internal("sounds/potion.mp3"));
+		
+		
+		portal = new Portal(6200, 60);
 	}
 
-	public void update(float delta) {
+	public boolean update(float delta) {
 		
+		
+		if(gameOver && Gdx.input.isKeyJustPressed(Input.Keys.Z)) return false; //False significa que o jogo terminou
 		//Se o heroi morreu é necessário resetar o jogo
 		if (this.hero.getStatus() == "dead") {
 			
 			if(--totalLife < 0) 	this.gameOver();
-			else				this.restart();
+			else					this.restart();
 			
 		}else if (this.hero.getStatus() == "dying") {
 			hero.update(bg.getWorldMap());
@@ -108,61 +109,41 @@ public class GameAction {
 			//Caso esteja vivo executa normalmente
 			
 			
-			if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-				if(xGeneralCoordenate > - 6300) {
-					this.hero.moveHorizontal(-5);
-					xGeneralCoordenate -= 5;
-				}
-				
-			}
-			if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-
-				if (xGeneralCoordenate < -5) {
-					xGeneralCoordenate += 5;
-					this.hero.moveHorizontal(5);
-				}
-			}
-
-			if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-
-				this.hero.statusChange("defensing");
-			}
-
-			if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-				this.hero.jump();
-			}
-
-			if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) {
-				int damage = this.hero.executeAttack(1);
-				if (damage > 0) { // se o ataque for zero, quer dizer que não pode ser realizado.
-					PhysicAttack atk = new PhysicAttack(this.hero, damage, 50, "hero");
-					attackZones.add(atk);
-				}
-				// Criar zona de ataque para verificar se algum inimigo foi atingido
-			}
-
-			if (Gdx.input.isKeyJustPressed(Input.Keys.X)) {
-				int damage = this.hero.executeAttack(2);
-				if (damage > 0) { // se o ataque for zero, quer dizer que não pode ser realizado.
-					ExplosionBladesAttack atk = new ExplosionBladesAttack(this.hero, "hero");
-					projetilZones.add(atk);
-				}
-				// Criar zona de ataque para verificar se algum inimigo foi atingido
-			}
 			
-			if (Gdx.input.isKeyJustPressed(Input.Keys.C)) {
-				//USAR POÇÃO HP
-				potionSound.play();
-				hero.restoreHP(50);
-				totalPotionHP--;
-			}
+			//Captura de TECLADO
+			if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) moveRight();
+			if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) moveLeft();
+			if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) this.hero.statusChange("defensing");
+			if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) this.hero.jump();
+			if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) comandAttack();
+			if (Gdx.input.isKeyJustPressed(Input.Keys.X)) comandProjetilAttack();
+			if (Gdx.input.isKeyJustPressed(Input.Keys.C)) healing();
+			if (Gdx.input.isKeyJustPressed(Input.Keys.V)) healStamina();
 			
-			if (Gdx.input.isKeyJustPressed(Input.Keys.V)) {
-				//USAR POÇÃO STAMINA
-				potionSound.play();
-				hero.restoreStamina(500);
-				totalPotionS--;
-			}
+			
+			//Captura de MOUSE
+			
+			Gdx.input.setInputProcessor(new InputMouse() {
+				 @Override
+	            public boolean touchDown(int x, int y, int pointer, int button) {
+	                if (button == Input.Buttons.LEFT) {
+	                	//verificando posicoes de icones
+	                	if(x > 320 && x < 360 && y > 420 && y < 460) comandAttack();
+	                	if(x > 370 && x < 420 && y > 420 && y < 460) comandProjetilAttack();
+	                	if(x > 430 && x < 470 && y > 420 && y < 460) healing();
+	                	if(x > 480 && x < 520 && y > 420 && y < 460) healStamina();
+	                	if(x > 45 && x < 70 && y > 430 && y < 460) moveLeft();
+	                	if(x > 71 && x < 100 && y > 430 && y < 460) hero.statusChange("defensing");
+	                	if(x > 101 && x < 135 && y > 430 && y < 460) moveRight();
+	                	if(x > 71 && x < 100 && y > 400 && y < 429) hero.jump();
+	                    return true;
+	                }
+	                return false;
+	            }
+			});
+			
+			
+			
 			
 
 			
@@ -186,8 +167,7 @@ public class GameAction {
 					// verificar se obj sofreu ataque
 					if (atk.isObjReceiveAtk(o)) {
 						
-						if (o.receiveDamage(atk.getDamage()))
-							enemies.removeValue(o, true);
+						if (o.receiveDamage(atk.getDamage())) enemies.removeValue(o, true);
 						hitAnyone = true;
 						this.record += atk.getDamage();
 					}
@@ -197,6 +177,7 @@ public class GameAction {
 					if(boss.receiveDamage(atk.getDamage())) {
 						objectiveComplete = true;
 						boss.statusChange("dying");
+						portal.openPortal();
 					}
 					hitAnyone = true;
 					this.record += atk.getDamage();
@@ -243,7 +224,7 @@ public class GameAction {
 					if (boss.receiveDamage(atk.getDamage())){
 						objectiveComplete = true;
 						boss.statusChange("dying");
-						System.out.println("Deveria morrer");
+						portal.openPortal();
 					}
 					hitAnyone = true;
 					this.record += atk.getDamage();
@@ -260,9 +241,28 @@ public class GameAction {
 			}
 
 			hero.update(groundCoordenates);
+			
+			if(objectiveComplete && portal.isEnterInPortal(hero.getXpos(), hero.getYpos())) return false;
 
 		}
+		
+		return true; //True significa que o jogo ainda está rodando.
 
+	}
+
+
+	private void healStamina() {
+		//USAR POÇÃO STAMINA
+		potionSound.play();
+		hero.restoreStamina(500);
+		totalPotionS--;
+	}
+
+	private void healing() {
+		//USAR POÇÃO HP
+		potionSound.play();
+		hero.restoreHP(50);
+		totalPotionHP--;
 	}
 
 	private void restart() {
@@ -276,7 +276,7 @@ public class GameAction {
 
 	private void gameOver() {
 		// Envia de volta para a tela de inicio
-		
+		gameOver = true;
 	}
 
 	public int getXGeneralCoordenate() {
@@ -289,6 +289,39 @@ public class GameAction {
 
 	public void addProjetilAttack(ProjetilAttack p) {
 		this.projetilZones.add(p);
+	}
+	
+	
+	private void comandProjetilAttack() {
+		int damage = this.hero.executeAttack(2);
+		if (damage > 0) { // se o ataque for zero, quer dizer que não pode ser realizado.
+			ExplosionBladesAttack atk = new ExplosionBladesAttack(this.hero, "hero");
+			projetilZones.add(atk);
+		}
+		// Criar zona de ataque para verificar se algum inimigo foi atingido
+	}
+	
+	private void comandAttack() {
+		int damage = this.hero.executeAttack(1);
+		if (damage > 0) { // se o ataque for zero, quer dizer que não pode ser realizado.
+			PhysicAttack atk = new PhysicAttack(this.hero, damage, 50, "hero");
+			attackZones.add(atk);
+		}
+		// Criar zona de ataque para verificar se algum inimigo foi atingido
+	}
+	
+	private void moveLeft() {
+		if (xGeneralCoordenate < -5) {
+			xGeneralCoordenate += 5;
+			this.hero.moveHorizontal(5);
+		}
+	}
+	
+	private void moveRight() {
+		if(xGeneralCoordenate > - 6300) {
+			this.hero.moveHorizontal(-5);
+			xGeneralCoordenate -= 5;
+		}
 	}
 
 }

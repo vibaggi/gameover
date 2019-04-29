@@ -2,16 +2,18 @@ package br.edu.ufabc.gameover;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import br.edu.ufabc.gameover.frames.CreditScreen;
 import br.edu.ufabc.gameover.frames.MapScreen;
+import br.edu.ufabc.gameover.frames.MyScreen;
 
 public class GameOverMain extends Game {
 	
 	//screens
-	private MapScreen firstWorld;
+//	private MapScreen firstWorld;
+	private MyScreen inProgress;
 	
 	//para o render
 	private SpriteBatch batch;
@@ -23,18 +25,19 @@ public class GameOverMain extends Game {
 	public void create () {
 
 		//iniciando Screen
-		firstWorld = new MapScreen("START");
-		setScreen(firstWorld);
+		inProgress = new MapScreen("START");
+//		inProgress = new CreditScreen("CREDIT"); 
+		setScreen(inProgress);
 		
 	}
 
 	@Override
 	public void render () {
 		//renderizando mapa
-		firstWorld.render(Gdx.graphics.getDeltaTime());
-//		if(firstWorld.isDone()) {
-//			
-//		}
+		inProgress.render(Gdx.graphics.getDeltaTime());
+		if(inProgress.isDone()) {
+			inProgress = new CreditScreen("CREDIT"); 
+		}
 		
 		
 		

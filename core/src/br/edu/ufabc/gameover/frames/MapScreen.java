@@ -7,7 +7,6 @@ public class MapScreen extends MyScreen{
 
 	private GameAction gameAction;
 	private Render render;
-
 	
 	public MapScreen(String idScreen) {
 		super(idScreen);
@@ -21,7 +20,9 @@ public class MapScreen extends MyScreen{
 	@Override
 	public void update(float delta) {
 		//Faz o update de todas as informações no mapa
-		gameAction.update(delta);
+		if(!gameAction.update(delta)) {
+			this.setDone(true);
+		}
 		
 		
 	}
@@ -33,6 +34,7 @@ public class MapScreen extends MyScreen{
 
 		
 	}
+	
 	
 
 }

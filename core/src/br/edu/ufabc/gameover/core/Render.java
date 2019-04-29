@@ -35,6 +35,8 @@ public class Render {
 		//primeiramente movimentando o plano de fundo
 		gameAction.bg.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
 		
+		gameAction.portal.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
+		
 		//Os objetos (nuvens, luzes, etc) são renderizados na sprite em seguida
 		for (GameObject o: gameAction.objects) {
 			o.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
@@ -43,6 +45,7 @@ public class Render {
 		for (Enemy e: gameAction.enemies) {
 			e.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
 		}
+		
 		
 		gameAction.boss.draw(gameAction.sprite, this.gameAction.getXGeneralCoordenate());
 		//Heroi é renderizado
@@ -55,6 +58,8 @@ public class Render {
 		}
 		
 		this.refreshInterface();
+		
+		
 		
 		gameAction.sprite.end();
 		
@@ -73,20 +78,30 @@ public class Render {
 			gameAction.sprite.draw(new Texture("icons/heart.png"), i*70 +50, 550);
 		}
 		
+		 
+		if(gameAction.gameOver) {
+			
+			bitmapFont.draw(gameAction.sprite, "GAME OVER", 300, 400);
+			bitmapFont.draw(gameAction.sprite, "Aperte Z para voltar a tela inicial", 300, 450 );
+			
+		}else {
+			bitmapFont.draw(gameAction.sprite, "Pontuacao: "+gameAction.record, 400, 540); //exibir pontuacao
+			
+			bitmapFont.draw(gameAction.sprite, "Stamina: "+gameAction.hero.getStamina(), 50, 540); //exibir HP
+			bitmapFont.draw(gameAction.sprite, "HP: "+gameAction.hero.getHP(), 50, 500); //exibir Stamina
+			
+			
+			gameAction.sprite.draw(new Texture("icons/potionS.png"), 610, 10);
+			bitmapFont.draw(gameAction.sprite, String.valueOf(gameAction.totalPotionS), 610, 25);
+			
+			gameAction.sprite.draw(new Texture("icons/potionHP.png"), 540, 10);
+			bitmapFont.draw(gameAction.sprite, String.valueOf(gameAction.totalPotionHP), 540, 25);
+			gameAction.sprite.draw(new Texture("icons/magic.png"), 470, 10);
+			gameAction.sprite.draw(new Texture("icons/attack.png"), 400, 10);
+			
+			gameAction.sprite.draw(new Texture("icons/controls.png"), 50, 5);
+		}
 		
-		bitmapFont.draw(gameAction.sprite, "Pontuacao: "+gameAction.record, 400, 540); //exibir pontuacao
-		
-		bitmapFont.draw(gameAction.sprite, "Stamina: "+gameAction.hero.getStamina(), 50, 540); //exibir HP
-		bitmapFont.draw(gameAction.sprite, "HP: "+gameAction.hero.getHP(), 50, 500); //exibir Stamina
-		
-		
-		gameAction.sprite.draw(new Texture("icons/potionS.png"), 610, 10);
-		bitmapFont.draw(gameAction.sprite, String.valueOf(gameAction.totalPotionS), 610, 25);
-		
-		gameAction.sprite.draw(new Texture("icons/potionHP.png"), 540, 10);
-		bitmapFont.draw(gameAction.sprite, String.valueOf(gameAction.totalPotionHP), 540, 25);
-		gameAction.sprite.draw(new Texture("icons/magic.png"), 470, 10);
-		gameAction.sprite.draw(new Texture("icons/attack.png"), 400, 10);
 		
 		
 	}

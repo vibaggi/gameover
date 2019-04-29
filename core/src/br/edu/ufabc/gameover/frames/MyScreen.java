@@ -7,10 +7,11 @@ public abstract class MyScreen implements Screen {
 
 
 	private String idScreen;
-	private boolean done;
+	private boolean done = false;
 
 	public MyScreen( String idScreen){
 		this.idScreen = idScreen;
+		done = false;
 	}
 
 	public abstract void update(float delta); // métodos obrigatórios par redefinição
