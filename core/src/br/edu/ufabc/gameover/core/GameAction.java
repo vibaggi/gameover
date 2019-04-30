@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 
+import br.edu.ufabc.gameover.frames.StartScreen;
 import br.edu.ufabc.gameover.models.BgWorld1;
 import br.edu.ufabc.gameover.models.CloudObject;
 import br.edu.ufabc.gameover.models.CogsEnemy;
@@ -14,6 +15,7 @@ import br.edu.ufabc.gameover.models.GrandTreeBossEnemy;
 import br.edu.ufabc.gameover.models.Hero;
 import br.edu.ufabc.gameover.models.Portal;
 import br.edu.ufabc.gameover.models.ScenarioObject;
+import br.edu.ufabc.gameover.models.SheHero;
 import br.edu.ufabc.gameover.models.SwordHero;
 import br.edu.ufabc.gameover.models.TreeEnemy;
 import br.edu.ufabc.gameover.models.ZombieEnemy;
@@ -52,7 +54,6 @@ public class GameAction {
 
 	public GameAction() {
 
-
 		objects = new Array<ScenarioObject>(); // iniciando arrays de objetos na tela
 		enemies = new Array<Enemy>();
 
@@ -74,8 +75,12 @@ public class GameAction {
 
 
 		sprite = new SpriteBatch();
-		hero = new SwordHero(bg.getWorldGravity(), bg.getWorldMap());
-//		hero = new SheHero(bg.getWorldGravity(), bg.getWorldMap());
+
+		if(StartScreen.getSelectHe()) {
+			hero = new SwordHero(bg.getWorldGravity(), bg.getWorldMap());
+		}else {
+			hero = new SheHero(bg.getWorldGravity(), bg.getWorldMap());
+		}
 
 		boss = new GrandTreeBossEnemy(5600, 90, this);
 		record = 0;

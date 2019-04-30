@@ -19,7 +19,7 @@ public class StartScreen extends MyScreen{
 	private BitmapFont bitmapFont;
 	private Music music;
 	
-	private boolean selectHe = true;
+	private static boolean selectHe = true;
 	
 	public StartScreen(String idScreen) {
 		super(idScreen);
@@ -44,7 +44,10 @@ public class StartScreen extends MyScreen{
                	//verificando posicoes de icones
                	if(x > 150 && x < 300 && y > 200 && y < 350) selectHe = true;
                	else if(x > 350 && x < 500 && y > 200 && y < 350) selectHe = false;
-               	else if(x > 300 && x < 500 && y > 400 && y < 450) setDone(true);
+               	else if(x > 300 && x < 500 && y > 400 && y < 450) {
+               		music.stop();
+               		setDone(true);
+               	}
                 return true;
                }
                return false;
@@ -77,8 +80,10 @@ public class StartScreen extends MyScreen{
 		
 	}
 	
-	public boolean getSelectHe() {
+	public static boolean getSelectHe() {
 		return selectHe;
 	}
+	
+	
 
 }
