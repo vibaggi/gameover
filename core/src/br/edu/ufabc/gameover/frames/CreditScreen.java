@@ -1,11 +1,14 @@
 package br.edu.ufabc.gameover.frames;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
+
+import br.edu.ufabc.gameover.core.InputMouse;
 
 public class CreditScreen extends MyScreen{
 
@@ -31,7 +34,15 @@ public class CreditScreen extends MyScreen{
 
 	@Override
 	public void update(float delta) {
-		// TODO Auto-generated method stub
+		
+		Gdx.input.setInputProcessor(new InputMouse() {
+			 @Override
+          public boolean touchDown(int x, int y, int pointer, int button) {
+              setDone(true);
+              music.stop();
+              return true;
+          }
+		});
 		
 	}
 
@@ -44,8 +55,13 @@ public class CreditScreen extends MyScreen{
 
 		spriteBatch.begin();
 		spriteBatch.draw(background, 0, 0, 800, 600, 0, 0, 800, 600, false, false);
-		bitmapFont.draw(spriteBatch, "CREDITOS", 100, 100);
+		bitmapFont.draw(spriteBatch, "CREDITOS", 100, 500);
 		
+		bitmapFont.draw(spriteBatch, "VITOR BAGGI - 21014714", 100, 400);
+		bitmapFont.draw(spriteBatch, "DANIEL MONTENEGRO - 11086616", 100, 200);
+		
+		
+		bitmapFont.draw(spriteBatch, "Clique na tecla para voltar ao menu.", 100, 50);
 		spriteBatch.end();
 	}
 

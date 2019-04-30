@@ -103,7 +103,7 @@ public class GameAction {
 		//Se o heroi morreu é necessário resetar o jogo
 		if (this.hero.getStatus() == "dead") {
 			
-			if(--totalLife < 0) 	this.gameOver();
+			if(--totalLife <= 0) 	this.gameOver();
 			else					this.restart();
 			
 		}else if (this.hero.getStatus() == "dying") {

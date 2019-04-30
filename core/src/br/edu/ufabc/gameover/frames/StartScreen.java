@@ -76,6 +76,10 @@ public class StartScreen extends MyScreen{
 		
 		bitmapFont.draw(spriteBatch, "COMECAR", 350, 100);
 		
+		
+		bitmapFont.draw(spriteBatch, "Guerreiro! ", 10, 80);
+		bitmapFont.draw(spriteBatch, "A árvore do submundo ameaça o planeta denovo!", 10, 50);
+		bitmapFont.draw(spriteBatch, "Derrote-a e pegue o portal de volta para casa! ", 10, 30);
 		spriteBatch.end();
 		
 	}
