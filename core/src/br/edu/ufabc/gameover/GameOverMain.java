@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import br.edu.ufabc.gameover.frames.CreditScreen;
 import br.edu.ufabc.gameover.frames.MapScreen;
 import br.edu.ufabc.gameover.frames.MyScreen;
+import br.edu.ufabc.gameover.frames.StartScreen;
 
 public class GameOverMain extends Game {
 	
@@ -25,8 +26,7 @@ public class GameOverMain extends Game {
 	public void create () {
 
 		//iniciando Screen
-		inProgress = new MapScreen("START");
-//		inProgress = new CreditScreen("CREDIT"); 
+		inProgress = new StartScreen("START");
 		setScreen(inProgress);
 		
 	}
@@ -36,7 +36,15 @@ public class GameOverMain extends Game {
 		//renderizando mapa
 		inProgress.render(Gdx.graphics.getDeltaTime());
 		if(inProgress.isDone()) {
-			inProgress = new CreditScreen("CREDIT"); 
+			System.out.println("IS DONE");
+			if(inProgress.getIdScreen() == "START") {
+				inProgress = new MapScreen("GAME");
+			}else if(inProgress.getIdScreen() == "GAME") {
+				inProgress = new CreditScreen("CREDITS"); 
+			}else {
+				inProgress = new StartScreen("START");
+			}
+			
 		}
 		
 		

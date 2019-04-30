@@ -1,6 +1,7 @@
 package br.edu.ufabc.gameover.frames;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,6 +14,7 @@ public class CreditScreen extends MyScreen{
 	private Matrix4 viewMatrix;
 	private Matrix4 tranMatrix;
 	private BitmapFont bitmapFont;
+	private Music music;
 	
 	public CreditScreen(String idScreen) {
 		super(idScreen);
@@ -22,6 +24,9 @@ public class CreditScreen extends MyScreen{
 		viewMatrix = new Matrix4();
 		tranMatrix = new Matrix4();
 		bitmapFont = new BitmapFont(Gdx.files.internal("fonts/interface.fnt"));
+		music	= Gdx.audio.newMusic(Gdx.files.internal("sounds/credits.mp3"));
+		music.setLooping(true);
+		music.play();
 	}
 
 	@Override

@@ -253,16 +253,22 @@ public class GameAction {
 
 	private void healStamina() {
 		//USAR POÇÃO STAMINA
-		potionSound.play();
-		hero.restoreStamina(500);
-		totalPotionS--;
+		if(totalPotionS>0) {
+			potionSound.play();
+			hero.restoreStamina(500);
+			totalPotionS--;
+		}
+		
 	}
 
 	private void healing() {
 		//USAR POÇÃO HP
-		potionSound.play();
-		hero.restoreHP(50);
-		totalPotionHP--;
+		if(totalPotionHP>0) {
+			potionSound.play();
+			hero.restoreHP(50);
+			totalPotionHP--;
+		}
+		
 	}
 
 	private void restart() {

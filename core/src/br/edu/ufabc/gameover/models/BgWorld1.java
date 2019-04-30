@@ -30,7 +30,7 @@ public class BgWorld1 extends ScenarioObject{
 			{310, 750, 1250},
 		};
 		
-		music = Gdx.audio.newMusic(Gdx.files.internal("sounds/scenario1/ambientation.mp3"));
+		music = Gdx.audio.newMusic(Gdx.files.internal("sounds/gaming.mp3"));
 		music.setLooping(true);
 		music.play();
 		
